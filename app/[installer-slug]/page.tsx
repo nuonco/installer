@@ -26,7 +26,7 @@ async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
   return res.json();
 }
 
-export default async function Installer({ params }) {
+export default async function Installer({ params, searchParams }) {
   const slug = params?.["installer-slug"];
   const installer = await getInstallerBySlug(slug);
   const demoUrl =
@@ -125,21 +125,27 @@ export default async function Installer({ params }) {
               <span className="font-semibold">Company name</span>
               <input
                 className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
+                defaultValue={
+                  Object.hasOwn(searchParams, "name") ? searchParams?.name : ""
+                }
                 name="name"
                 type="text"
                 required
               />
             </label>
             {installer?.app_sandbox?.cloud_platform === "aws" && (
-              <AWSInstallerFormFields />
+              <AWSInstallerFormFields searchParams={searchParams} />
             )}
 
             {installer?.app_sandbox?.cloud_platform === "azure" && (
-              <AzureInstallerFormFields />
+              <AzureInstallerFormFields searchParams={searchParams} />
             )}
 
             {installer?.app_inputs?.app_inputs && (
-              <AppInputFields inputs={installer?.app_inputs?.app_inputs} />
+              <AppInputFields
+                inputs={installer?.app_inputs?.app_inputs}
+                searchParams={searchParams}
+              />
             )}
 
             <button className="rounded text-sm text-gray-50 bg-fuchsia-600 hover:bg-fuchsia-900 focus:bg-fuchsia-900 active:bg-fuchsia-800 px-4 py-1.5 w-fit">
