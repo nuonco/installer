@@ -19,6 +19,7 @@ async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
   });
 
   if (!res.ok) {
+    console.debug(await res.json());
     throw new Error("Can't fetch installer");
   }
 
@@ -28,9 +29,9 @@ async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
 export default async function Installer({ params }) {
   const slug = params?.["installer-slug"];
   const installer = await getInstallerBySlug(slug);
-  const isDemoUrlValid = /^((http|https):\/\/)/.test(
-    installer?.metadata?.demo_url,
-  );
+  const demoUrl =
+    installer?.metadata?.formated_demo_url || installer?.metadata?.demo_url;
+  const isDemoUrlValid = /^((http|https):\/\/)/.test(demoUrl);
 
   return (
     <>
@@ -88,20 +89,11 @@ export default async function Installer({ params }) {
           </Link>
         </div>
 
-        {installer?.metadata?.formatted_demo_url ? (
+        {demoUrl && isDemoUrlValid ? (
           <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full">
             <iframe
               className="absolute top-0 left-0 w-full h-full"
-              src={installer?.metadata?.formatted_demo_url}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
-        ) : installer?.metadata?.demo_url && isDemoUrlValid ? (
-          <div className="relative pb-[56.25%] h-[0px] overflow-hidden max-w-full">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={installer?.metadata?.demo_url}
+              src={demoUrl}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             ></iframe>
