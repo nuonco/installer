@@ -21,6 +21,7 @@ async function getInstallerInstall(
   );
 
   if (!res.ok) {
+    console.debug(await res.json());
     throw new Error("Can't fetch install");
   }
 
