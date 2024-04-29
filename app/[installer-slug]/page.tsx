@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { createInstall } from "@/app/[installer-slug]/actions";
 import { NUON_API_URL } from "@/common";
 import {
   AWSInstallerFormFields,
   AppInputFields,
   AzureInstallerFormFields,
+  Link,
   ScrollToButton,
   StepOneAWS,
   StepOneAzure,
@@ -36,10 +36,7 @@ export default async function Installer({ params, searchParams }) {
   return (
     <>
       <header className="flex flex-auto flex-col gap-12 md:gap-24">
-        <Link
-          className="text-fuchsia-600 hover:text-fuchsia-900 focus:text-fuchsia-900"
-          href="/"
-        >
+        <Link className="w-fit" href="/">
           View all installation options
         </Link>
         <div className="flex flex-col gap-4">
@@ -62,12 +59,14 @@ export default async function Installer({ params, searchParams }) {
               className="inline-flex align-middle"
               src="/azure-logo.svg"
               width="40px"
+              alt="azure"
             />
           ) : (
             <img
               className="inline-flex align-middle"
               src="/aws-logo.svg"
               width="80px"
+              alt="aws"
             />
           )}{" "}
           account.
@@ -80,7 +79,7 @@ export default async function Installer({ params, searchParams }) {
           </ScrollToButton>
 
           <Link
-            className="border border-current text-sm px-4 py-1.5 rounded hover:text-fuchsia-600 focus:text-fuchsia-600"
+            className="border border-current text-gray-950 dark:text-gray-50 text-sm px-4 py-1.5 rounded"
             href={installer?.metadata?.documentation_url}
             target="_blank"
             rel="noreferrer"
@@ -148,7 +147,7 @@ export default async function Installer({ params, searchParams }) {
               />
             )}
 
-            <button className="rounded text-sm text-gray-50 bg-fuchsia-600 hover:bg-fuchsia-900 focus:bg-fuchsia-900 active:bg-fuchsia-800 px-4 py-1.5 w-fit">
+            <button className="rounded text-sm text-gray-50 bg-fuchsia-600 hover:bg-fuchsia-700 focus:bg-fuchsia-700 active:bg-fuchsia-800 px-4 py-1.5 w-fit">
               Submit
             </button>
           </form>
