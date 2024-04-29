@@ -1,5 +1,5 @@
-import Link from "next/link";
 import React, { type FC } from "react";
+import { Link } from "@/components";
 
 export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
   installer,
@@ -16,7 +16,6 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
           This IAM role is only used when first provisioning your install, or
           when deprovisioning and can be removed after setup. Read more about{" "}
           <Link
-            className="text-fuchsia-600 hover:text-fuchsia-900 focus:text-fuchsia-900"
             href="https://docs.nuon.co/guides/install-access-permissions"
             target="_blank"
             rel="noreferrer"
@@ -28,7 +27,7 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
       </div>
 
       <div className="flex flex-col gap-12">
-        <div className="flex flex-col gap-2 rounded border p-6">
+        <div className="flex flex-col gap-2 rounded bg-gray-100 dark:bg-gray-900 p-6 items-start">
           <h3 className="text-md font-semibold">
             Create IAM policies with CloudFormation
           </h3>
@@ -38,14 +37,14 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
             link. This will create an IAM role granting access for{" "}
             {installer?.metadata?.name} to install Sourcegraph. Please use the
             stack output called{" "}
-            <code className="bg-gray-600 text-yellow-400 font-monospaced px-2 py-1 text-xs rounded-sm h-[22px] inline-flex">
+            <code className="bg-gray-800 text-orange-400 font-monospaced px-2 py-1 rounded-sm h-[22px] inline-flex text-[11px] tracking-wide">
               RoleARN
             </code>{" "}
             as an input in step 2.
           </p>
 
           <Link
-            className="text-sm text-fuchsia-600 hover:text-fuchsia-900 focus:text-fuchsia-900 mt-4"
+            className="text-sm mt-4"
             href={`https://us-west-2.console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateUrl=${installer?.app_sandbox?.artifacts?.cloudformation_stack_template}&stackName=nuon-${installer?.app_sandbox?.public_git_vcs_config?.directory}-permissions`}
             target="_blank"
             rel="noreferrer"
@@ -54,7 +53,7 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
           </Link>
         </div>
 
-        <div className="flex flex-col gap-2 rounded border p-6">
+        <div className="flex flex-col gap-2 rounded bg-gray-100 dark:bg-gray-900 p-6 items-start">
           <h3 className="text-md font-semibold">
             Create IAM policies with Terraform
           </h3>
@@ -65,7 +64,7 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
           </p>
 
           <Link
-            className="text-sm text-fuchsia-600 hover:text-fuchsia-900 focus:text-fuchsia-900 mt-4"
+            className="text-sm mt-4"
             href="https://github.com/nuonco/sandboxes/tree/main/iam-role"
             target="_blank"
             rel="noreferrer"
@@ -74,7 +73,7 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
           </Link>
         </div>
 
-        <div className="flex flex-col gap-2 rounded border p-6">
+        <div className="flex flex-col gap-2 rounded bg-gray-100 dark:bg-gray-900 p-6">
           <h3 className="text-md font-semibold">
             Create IAM policies manually
           </h3>
@@ -85,9 +84,9 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
             install, and can be added later if desired.
           </p>
 
-          <div className="flex gap-2 mt-4">
+          <div className="flex gap-2 mt-4 items-center">
             <Link
-              className="text-sm text-fuchsia-600 hover:text-fuchsia-900 focus:text-fuchsia-900"
+              className="text-sm"
               href={installer?.app_sandbox?.artifacts?.trust_policy}
               target="_blank"
               rel="noreferrer"
@@ -95,7 +94,7 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
               Trust policy
             </Link>
             <Link
-              className="text-sm text-fuchsia-600 hover:text-fuchsia-900 focus:text-fuchsia-900"
+              className="text-sm"
               href={installer?.app_sandbox?.artifacts?.provision_policy}
               target="_blank"
               rel="noreferrer"
@@ -103,7 +102,7 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
               Provision policy
             </Link>
             <Link
-              className="text-sm text-fuchsia-600 hover:text-fuchsia-900 focus:text-fuchsia-900"
+              className="text-sm"
               href={installer?.app_sandbox?.artifacts?.deprovision_policy}
               target="_blank"
               rel="noreferrer"
