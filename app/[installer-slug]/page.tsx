@@ -8,7 +8,6 @@ import {
   ScrollToButton,
   StepOneAWS,
   StepOneAzure,
-  Video,
 } from "@/components";
 
 async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
@@ -30,9 +29,6 @@ async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
 export default async function Installer({params, searchParams}) {
   const slug = params?.["installer-slug"];
   const installer = await getInstallerBySlug(slug);
-  const demoUrl =
-    installer?.metadata?.formated_demo_url || installer?.metadata?.demo_url;
-  const isDemoUrlValid = /^((http|https):\/\/)/.test(demoUrl);
 
   return (
     <>
@@ -88,10 +84,6 @@ export default async function Installer({params, searchParams}) {
             View {installer?.metadata?.name} Documentation
           </Link>
         </div>
-
-        {demoUrl && isDemoUrlValid ? (
-          <Video src={demoUrl} />
-        ) : null}
       </header>
       <main
         className="flex-auto grid grid-cols-1 md:grid-cols-2 gap-12 pt-12"
