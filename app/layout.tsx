@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Link } from "@/components";
+import type {Metadata} from "next";
+import {Inter} from "next/font/google";
+import {Link} from "@/components";
+import {PoweredByNuon} from "@/components/PoweredByNuon";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Nuon installers",
@@ -64,6 +65,7 @@ export default function RootLayout({
               <Link href="mailto:support@nuon.co" className="text-xs">
                 support@nuon.co
               </Link>
+              <PoweredByNuon />
             </div>
           </footer>
         </div>
