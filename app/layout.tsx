@@ -38,33 +38,6 @@ export default function RootLayout({
               </Link>
             </div>
             <div className="flex gap-6 items-center">
-              <Link
-                href="https://docs.nuon.co/guides/creating-an-installer"
-                className="text-xs"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Installer docs
-              </Link>
-              <Link
-                href="https://github.com/nuonco"
-                className="text-xs"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Github
-              </Link>
-              <Link
-                href="https://join.slack.com/t/nuoncommunity/shared_invite/zt-1q323vw9z-C8ztRP~HfWjZx6AXi50VRA"
-                className="text-xs"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Slack
-              </Link>
-              <Link href="mailto:support@nuon.co" className="text-xs">
-                support@nuon.co
-              </Link>
               <PoweredByNuon />
             </div>
           </footer>

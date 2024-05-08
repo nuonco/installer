@@ -29,16 +29,10 @@ async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
 export default async function Installer({params, searchParams}) {
   const slug = params?.["installer-slug"];
   const installer = await getInstallerBySlug(slug);
-  const demoUrl =
-    installer?.metadata?.formated_demo_url || installer?.metadata?.demo_url;
-  const isDemoUrlValid = /^((http|https):\/\/)/.test(demoUrl);
 
   return (
     <>
       <header className="flex flex-auto flex-col gap-12 md:gap-24">
-        <Link className="w-fit" href="/">
-          View all installation options
-        </Link>
         <div className="flex flex-col gap-4">
           <h1>
             <Link href={installer?.metadata?.homepage_url}>
@@ -48,56 +42,21 @@ export default async function Installer({params, searchParams}) {
               />
             </Link>
           </h1>
-          <p>{installer?.metadata?.description}</p>
         </div>
 
         <p className="text-4xl text-center leading-relaxed">
-          Install a fully managed version of {installer?.metadata?.name} in your
-          own{" "}
-          {installer?.app?.cloud_platform === "azure" ? (
-            <img
-              className="inline-flex align-middle"
-              src="/azure-logo.svg"
-              width="40px"
-              alt="azure"
-            />
-          ) : (
-            <img
-              className="inline-flex align-middle"
-              src="/aws-logo.svg"
-              width="80px"
-              alt="aws"
-            />
-          )}{" "}
-          account.
+          {installer?.metadata?.description}
         </p>
 
         <div className="flex flex-wrap gap-6 w-fit m-auto justify-center items-center">
-          <ScrollToButton elementId="steps">
-            Install into my{" "}
-            {installer?.app?.cloud_platform === "azure" ? "Azure" : "AWS"}
-          </ScrollToButton>
-
-          <Link
-            className="border border-current text-gray-950 dark:text-gray-50 text-sm px-4 py-1.5 rounded"
-            href={installer?.metadata?.documentation_url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View {installer?.metadata?.name} Documentation
+          <Link className="w-fit" href="/">
+            {'< Other installation options'}
           </Link>
-        </div>
 
-        {demoUrl && isDemoUrlValid ? (
-          <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={demoUrl}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
-        ) : null}
+          <ScrollToButton elementId="steps">
+            Install {installer?.metadata?.name}
+          </ScrollToButton>
+        </div>
       </header>
       <main
         className="flex-auto grid grid-cols-1 md:grid-cols-2 gap-12 pt-12"
