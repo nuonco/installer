@@ -42,28 +42,10 @@ export default async function Installer({params, searchParams}) {
               />
             </Link>
           </h1>
-          <p>{installer?.metadata?.description}</p>
         </div>
 
         <p className="text-4xl text-center leading-relaxed">
-          Install a fully managed version of {installer?.metadata?.name} in your
-          own{" "}
-          {installer?.app?.cloud_platform === "azure" ? (
-            <img
-              className="inline-flex align-middle"
-              src="/azure-logo.svg"
-              width="40px"
-              alt="azure"
-            />
-          ) : (
-            <img
-              className="inline-flex align-middle"
-              src="/aws-logo.svg"
-              width="80px"
-              alt="aws"
-            />
-          )}{" "}
-          account.
+          {installer?.metadata?.description}
         </p>
 
         <div className="flex flex-wrap gap-6 w-fit m-auto justify-center items-center">
