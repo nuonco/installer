@@ -8,6 +8,7 @@ import {
   ScrollToButton,
   StepOneAWS,
   StepOneAzure,
+  Video,
 } from "@/components";
 
 async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
@@ -89,14 +90,7 @@ export default async function Installer({params, searchParams}) {
         </div>
 
         {demoUrl && isDemoUrlValid ? (
-          <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={demoUrl}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
+          <Video src={demoUrl} />
         ) : null}
       </header>
       <main
