@@ -1,7 +1,7 @@
-import React, { type FC } from "react";
-import { Link } from "@/components";
+import React, {type FC} from "react";
+import {Link} from "@/components";
 
-export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
+export const StepOneAWS: FC<{installer: Record<string, any>}> = ({
   installer,
 }) => {
   return (
@@ -34,8 +34,8 @@ export const StepOneAWS: FC<{ installer: Record<string, any> }> = ({
           <p className="text-sm">
             You can create a 1-click IAM role with the correct policies attached
             to provision + deprovision your application using the following
-            link. This will create an IAM role granting access for{" "}
-            {installer?.metadata?.name} to install Sourcegraph. Please use the
+            link. This will create an IAM role granting access to install{" "}
+            {installer?.metadata?.name}. Please use the
             stack output called{" "}
             <code className="bg-gray-800 text-orange-400 font-monospaced px-2 py-1 rounded-sm h-[22px] inline-flex text-[11px] tracking-wide">
               RoleARN
