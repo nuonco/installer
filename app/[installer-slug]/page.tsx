@@ -1,5 +1,5 @@
-import { createInstall } from "@/app/[installer-slug]/actions";
-import { NUON_API_URL } from "@/common";
+import {createInstall} from "@/app/[installer-slug]/actions";
+import {NUON_API_URL} from "@/common";
 import {
   AWSInstallerFormFields,
   AppInputFields,
@@ -26,7 +26,7 @@ async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
   return res.json();
 }
 
-export default async function Installer({ params, searchParams }) {
+export default async function Installer({params, searchParams}) {
   const slug = params?.["installer-slug"];
   const installer = await getInstallerBySlug(slug);
   const demoUrl =
@@ -111,6 +111,7 @@ export default async function Installer({ params, searchParams }) {
           )}
         </div>
         <div>
+          <h2 className="text-xl font-semibold mb-4">Step 2: configure your install</h2>
           <form
             className="flex flex-col gap-4"
             action={createInstall.bind(null, slug)}
