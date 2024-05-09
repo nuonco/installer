@@ -1,5 +1,5 @@
-import { NUON_API_URL } from "@/common";
-import { Link } from "@/components";
+import {NUON_API_URL} from "@/common";
+import {Link} from "@/components";
 
 async function getInstallers(): Promise<Array<Record<string, any>>> {
   const res = await fetch(`${NUON_API_URL}/v1/installers`, {
@@ -18,8 +18,9 @@ async function getInstallers(): Promise<Array<Record<string, any>>> {
   return res.json();
 }
 
-export default async function Home() {
+export default async function Home({searchParams}) {
   const installers = await getInstallers();
+  const queryString = new URLSearchParams(searchParams).toString();
 
   return (
     <>
@@ -57,7 +58,7 @@ export default async function Home() {
                   </p>
                 </span>
 
-                <Link className="text-sm" href={`/${installer?.slug}`}>
+                <Link className="text-sm" href={`/${installer?.slug}?${queryString}`}>
                   Install now
                 </Link>
               </div>
