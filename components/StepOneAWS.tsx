@@ -1,9 +1,7 @@
-import React, {type FC} from "react";
-import {Link} from "@/components";
+import React, { type FC } from "react";
+import { Link } from "@/components";
 
-export const StepOneAWS: FC<{installer: Record<string, any>}> = ({
-  installer,
-}) => {
+export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
   return (
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-4">
@@ -35,8 +33,7 @@ export const StepOneAWS: FC<{installer: Record<string, any>}> = ({
             You can create a 1-click IAM role with the correct policies attached
             to provision + deprovision your application using the following
             link. This will create an IAM role granting access to install{" "}
-            {installer?.metadata?.name}. Please use the
-            stack output called{" "}
+            {app?.metadata?.name}. Please use the stack output called{" "}
             <code className="bg-gray-800 text-orange-400 font-monospaced px-2 py-1 rounded-sm h-[22px] inline-flex text-[11px] tracking-wide">
               RoleARN
             </code>{" "}
@@ -45,7 +42,7 @@ export const StepOneAWS: FC<{installer: Record<string, any>}> = ({
 
           <Link
             className="text-sm mt-4"
-            href={`https://us-west-2.console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateUrl=${installer?.app_sandbox?.artifacts?.cloudformation_stack_template}&stackName=nuon-${installer?.app_sandbox?.public_git_vcs_config?.directory}-permissions`}
+            href={`https://us-west-2.console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateUrl=${app?.sandbox_config?.artifacts?.cloudformation_stack_template}&stackName=nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`}
             target="_blank"
             rel="noreferrer"
           >
@@ -87,7 +84,7 @@ export const StepOneAWS: FC<{installer: Record<string, any>}> = ({
           <div className="flex gap-2 mt-4 items-center">
             <Link
               className="text-sm"
-              href={installer?.app_sandbox?.artifacts?.trust_policy}
+              href={app?.sandbox_config?.artifacts?.trust_policy}
               target="_blank"
               rel="noreferrer"
             >
@@ -95,7 +92,7 @@ export const StepOneAWS: FC<{installer: Record<string, any>}> = ({
             </Link>
             <Link
               className="text-sm"
-              href={installer?.app_sandbox?.artifacts?.provision_policy}
+              href={app?.sandbox_config?.artifacts?.provision_policy}
               target="_blank"
               rel="noreferrer"
             >
@@ -103,7 +100,7 @@ export const StepOneAWS: FC<{installer: Record<string, any>}> = ({
             </Link>
             <Link
               className="text-sm"
-              href={installer?.app_sandbox?.artifacts?.deprovision_policy}
+              href={app?.sandbox_config?.artifacts?.deprovision_policy}
               target="_blank"
               rel="noreferrer"
             >

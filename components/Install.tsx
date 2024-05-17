@@ -1,18 +1,18 @@
 "use client";
+
 import React, { type FC, useEffect, useState } from "react";
 
 export const Install: FC<{
   install: Record<string, any>;
-  installerSlug: string;
-}> = ({ install, installerSlug }) => {
+}> = ({ install }) => {
   const [data, setData] = useState<Record<string, any>>(install);
   const [isLoading, setLoading] = useState(true);
 
   const fetchInstall = () => {
-    fetch(`/api/installers/${installerSlug}/${install?.id}/`)
+    fetch(`/api/${install?.id}/`)
       .then((res) => res.json())
       .then((d) => {
-        setData(d?.install);
+        setData(d);
         setLoading(false);
       })
       .catch(console.error);

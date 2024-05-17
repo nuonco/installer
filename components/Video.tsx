@@ -1,14 +1,11 @@
-import React, {type FC} from "react";
+import React, { type FC } from "react";
 
 interface IVideo {
-  className: string;
+  className?: string;
   src: string;
 }
 
-export const Video: FC<IVideo> = ({
-  className = "",
-  src = ""
-}) => {
+export const Video: FC<IVideo> = ({ className = "", src }) => {
   return (
     <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full">
       <iframe

@@ -3,22 +3,28 @@
 import { redirect } from "next/navigation";
 import { NUON_API_URL } from "@/common";
 
-export async function createInstall(slug: string, formData: FormData) {
-  const { platform, ...data } = Object.fromEntries(formData);
-  const inputs = Object.keys(data).reduce((acc: Record<string, unknown>, key) => {
-    if (key.includes("input:")) {
-      acc[key.replace("input:", "")] = data[key];
-    }
+export async function createInstall(
+  app: Record<string, any>,
+  formData: FormData,
+) {
+  const data = Object.fromEntries(formData);
+  const inputs = Object.keys(data).reduce(
+    (acc: Record<string, unknown>, key) => {
+      if (key.includes("input:")) {
+        acc[key.replace("input:", "")] = data[key];
+      }
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {},
+  );
 
   let input: Record<string, unknown> = {
     inputs,
     name: data?.name,
   };
 
-  if (platform === "azure") {
+  if (app?.cloud_platform === "azure") {
     input = {
       azure_account: {
         location: data?.location,
@@ -31,7 +37,7 @@ export async function createInstall(slug: string, formData: FormData) {
     };
   }
 
-  if (platform === "aws") {
+  if (app?.cloud_platform === "aws") {
     input = {
       aws_account: {
         iam_role_arn: data?.iam_role_arn,
@@ -41,13 +47,17 @@ export async function createInstall(slug: string, formData: FormData) {
     };
   }
 
-  const res = await fetch(`${NUON_API_URL}/v1/installer/${slug}/installs`, {
+  const res = await fetch(`${NUON_API_URL}/v1/apps/${app?.id}/installs`, {
     body: JSON.stringify(input),
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
+      "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
+    },
     method: "POST",
   });
 
   const install = await res.json();
 
-  redirect(`/${slug}/${install?.id}`);
+  redirect(`/${app?.name}/${install?.id}`);
 }

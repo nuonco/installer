@@ -1,5 +1,5 @@
-import {createInstall} from "@/app/[installer-slug]/actions";
-import {NUON_API_URL} from "@/common";
+import { createInstall } from "@/app/[installer-slug]/actions";
+import { getAppBySlug, getInstaller } from "@/common";
 import {
   AWSInstallerFormFields,
   AppInputFields,
@@ -10,25 +10,12 @@ import {
   StepOneAzure,
 } from "@/components";
 
-async function getInstallerBySlug(slug: string): Promise<Record<string, any>> {
-  const res = await fetch(`${NUON_API_URL}/v1/installer/${slug}/render`, {
-    headers: {
-      Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
-      "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
-    },
-  });
-
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch installer");
-  }
-
-  return res.json();
-}
-
-export default async function Installer({params, searchParams}) {
+export default async function Installer({ params, searchParams }) {
   const slug = params?.["installer-slug"];
-  const installer = await getInstallerBySlug(slug);
+  const [app, installer] = await Promise.all([
+    getAppBySlug(slug),
+    getInstaller(),
+  ]);
 
   return (
     <>
@@ -45,17 +32,15 @@ export default async function Installer({params, searchParams}) {
         </div>
 
         <p className="text-4xl text-center leading-relaxed">
-          {installer?.metadata?.description}
+          {app?.description}
         </p>
 
         <div className="flex flex-wrap gap-6 w-fit m-auto justify-center items-center">
           <Link className="w-fit" href="/">
-            {'< Other installation options'}
+            {"< Other installation options"}
           </Link>
 
-          <ScrollToButton elementId="steps">
-            Install {installer?.metadata?.name}
-          </ScrollToButton>
+          <ScrollToButton elementId="steps">Install {app?.name}</ScrollToButton>
         </div>
       </header>
       <main
@@ -63,23 +48,20 @@ export default async function Installer({params, searchParams}) {
         id="steps"
       >
         <div>
-          {installer?.app?.cloud_platform === "azure" ? (
+          {app?.cloud_platform === "azure" ? (
             <StepOneAzure />
           ) : (
-            <StepOneAWS installer={installer} />
+            <StepOneAWS app={app} />
           )}
         </div>
         <div>
-          <h2 className="text-xl font-semibold mb-4">Step 2: configure your install</h2>
+          <h2 className="text-xl font-semibold mb-4">
+            Step 2: configure your install
+          </h2>
           <form
             className="flex flex-col gap-4"
-            action={createInstall.bind(null, slug)}
+            action={createInstall.bind(null, app)}
           >
-            <input
-              name="platform"
-              value={installer?.app_sandbox?.cloud_platform}
-              type="hidden"
-            />
             <label className="flex flex-col flex-auto gap-2">
               <span className="font-semibold">Company name</span>
               <input
@@ -92,17 +74,17 @@ export default async function Installer({params, searchParams}) {
                 required
               />
             </label>
-            {installer?.app_sandbox?.cloud_platform === "aws" && (
+            {app?.cloud_platform === "aws" && (
               <AWSInstallerFormFields searchParams={searchParams} />
             )}
 
-            {installer?.app_sandbox?.cloud_platform === "azure" && (
+            {app?.cloud_platform === "azure" && (
               <AzureInstallerFormFields searchParams={searchParams} />
             )}
 
-            {installer?.app_inputs?.app_inputs && (
+            {app?.input_config?.app_inputs && (
               <AppInputFields
-                inputs={installer?.app_inputs?.app_inputs}
+                inputs={app?.input_config?.app_inputs}
                 searchParams={searchParams}
               />
             )}
