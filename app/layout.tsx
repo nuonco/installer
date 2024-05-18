@@ -1,18 +1,30 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type {Metadata} from "next";
+import {Inter} from "next/font/google";
 import React from "react";
 import showdown from "showdown";
-import { getInstaller } from "@/common";
-import { Link, PoweredByNuon } from "@/components";
+import {getInstaller} from "@/common";
+import {Link, PoweredByNuon} from "@/components";
 import "./globals.css";
 
 const markdown = new showdown.Converter();
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({subsets: ["latin"]});
 
-export const metadata: Metadata = {
-  title: "Nuon installers",
-  description:
-    "Let your customers install your app in their cloud account with only a few clicks",
+export async function generateMetadata(
+): Promise<Metadata> {
+  const {metadata} = await getInstaller();
+
+  return {
+    title: metadata.name,
+    description: metadata.description,
+    icons: {
+      icon: metadata.favicon_url,
+      shortcut: metadata.favicon_url,
+    },
+  }
+}
+
+const missingData = {
+  orgName: 'Nuon',
 };
 
 export default async function RootLayout({
@@ -20,7 +32,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const installer = await getInstaller();
+  const {metadata} = await getInstaller();
 
   return (
     <html
@@ -32,11 +44,11 @@ export default async function RootLayout({
           {children}
           <footer className="flex items-center justify-between">
             <div className="flex gap-2 items-center">
-              {installer?.metadata?.copyright_markdown ? (
+              {metadata.copyright_markdown ? (
                 <div
                   dangerouslySetInnerHTML={{
                     __html: markdown.makeHtml(
-                      installer?.metadata?.copyright_markdown,
+                      metadata.copyright_markdown,
                     ),
                   }}
                 />
@@ -46,22 +58,22 @@ export default async function RootLayout({
                     &copy; {new Date().getFullYear()}
                   </span>
                   <Link
-                    href="https://nuon.co"
+                    href={metadata.homepage_url}
                     className="text-xs"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Nuon
+                    {missingData.orgName}
                   </Link>
                 </>
               )}
             </div>
             <div className="flex gap-6 items-center">
-              {installer?.metadata?.footer_markdown ? (
+              {metadata.footer_markdown ? (
                 <div
                   dangerouslySetInnerHTML={{
                     __html: markdown.makeHtml(
-                      installer?.metadata?.footer_markdown,
+                      metadata.footer_markdown,
                     ),
                   }}
                 />
