@@ -1,6 +1,6 @@
 import type {Config} from "tailwindcss";
 
-const colors = require('tailwindcss/colors');
+import theme from "./theme";
 
 const config: Config = {
     content: [
@@ -8,13 +8,13 @@ const config: Config = {
         "./components/**/*.{js,ts,jsx,tsx,mdx}",
         "./app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
-    darkMode: 'selector',
+    darkMode: theme.darkMode as Config["darkMode"],
     theme: {
         extend: {
             colors: {
-                white: '#fff8f0',
-                black: '#270b46',
-                primary: colors.red,
+                white: theme.white,
+                black: theme.black,
+                primary: theme.primary,
             },
         },
     },
