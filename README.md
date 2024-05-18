@@ -19,7 +19,13 @@ You can access this information using the [Nuon CLI](https://docs.nuon.co/cli) i
 nuon orgs print-config
 ```
 
-Now install the dependencies and run the development server:
+Then, create a theme config file by copying the example one we have provided. You can update this file to customize the theme.
+
+```bash
+cp theme.ts.example theme.ts
+```
+
+Finally, install the dependencies and run the development server:
 
 ```bash
 npm i && npm run dev

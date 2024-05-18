@@ -12,7 +12,7 @@ export const StepOneAzure: FC = () => {
           Installs are created using service principals that nuon can use to
           provision the sandbox. Read more about how to set these principals up{" "}
           <Link
-            className="text-fuchsia-600 hover:text-fuchsia-900 focus:text-fuchsia-900"
+            className="text-primary-600 hover:text-primary-900 focus:text-primary-900"
             href="https://docs.nuon.co/guides/azure-support#create-service-principal"
             target="_blank"
             rel="noreferrer"

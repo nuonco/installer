@@ -17,7 +17,7 @@ export const ScrollToButton: FC<IScrollToButton> = ({
 
   return (
     <button
-      className={`rounded text-sm text-gray-50 bg-fuchsia-600 hover:bg-fuchsia-700 focus:bg-fuchsia-700 active:bg-fuchsia-800 px-4 py-1.5 ${className}`}
+      className={`rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 ${className}`}
       onClick={() => {
         "use client";
         document?.getElementById(elementId)?.scrollIntoView({
