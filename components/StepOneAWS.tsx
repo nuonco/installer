@@ -1,5 +1,6 @@
 import React, { type FC } from "react";
 import { Link } from "@/components";
+import Card from "@/components/Card";
 
 export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
   return (
@@ -25,7 +26,7 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
       </div>
 
       <div className="flex flex-col gap-12">
-        <div className="flex flex-col gap-2 rounded bg-gray-100 dark:bg-gray-900 p-6 items-start">
+        <Card>
           <h3 className="text-md font-semibold">
             Create IAM policies with CloudFormation
           </h3>
@@ -48,9 +49,9 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
           >
             Create IAM Role
           </Link>
-        </div>
+        </Card>
 
-        <div className="flex flex-col gap-2 rounded bg-gray-100 dark:bg-gray-900 p-6 items-start">
+        <Card>
           <h3 className="text-md font-semibold">
             Create IAM policies with Terraform
           </h3>
@@ -68,9 +69,9 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
           >
             Terraform Module
           </Link>
-        </div>
+        </Card>
 
-        <div className="flex flex-col gap-2 rounded bg-gray-100 dark:bg-gray-900 p-6">
+        <Card>
           <h3 className="text-md font-semibold">
             Create IAM policies manually
           </h3>
@@ -107,7 +108,7 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
               Deprovision policy
             </Link>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );
