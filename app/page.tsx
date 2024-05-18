@@ -1,5 +1,6 @@
 import { getInstaller } from "@/common";
 import { Link, Video } from "@/components";
+import Card from "@/components/Card";
 
 export default async function Home({ searchParams }) {  
   const installer = await getInstaller();
@@ -32,10 +33,7 @@ export default async function Home({ searchParams }) {
         <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6">
           {installer?.apps.length &&
             installer?.apps.map((app) => (
-              <div
-                className="p-6 bg-gray-100 dark:bg-gray-900 flex flex-col gap-4 rounded justify-between items-start"
-                key={app?.id}
-              >
+              <Card key={app?.id}>
                 <span>
                   <h2 className="text-lg font-semibold mb-2">{app?.name}</h2>
                   <p className="text-xs leading-relaxed">{app?.description}</p>
@@ -44,7 +42,7 @@ export default async function Home({ searchParams }) {
                 <Link className="text-sm" href={`/${app?.name}?${queryString}`}>
                   Install now
                 </Link>
-              </div>
+              </Card>
             ))}
         </div>
       </main>

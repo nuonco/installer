@@ -8,3 +8,4 @@ export * from "./ScrollToButton";
 export * from "./StepOneAWS";
 export * from "./StepOneAzure";
 export * from "./Video";
+export * from "./Card";

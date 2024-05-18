@@ -8,7 +8,7 @@ export const Link: FC<React.ComponentProps<typeof NextLink>> = ({
 }) => {
   return (
     <NextLink
-      className={`text-fuchsia-600 dark:text-fuchsia-500 hover:text-fuchsia-700 focus:text-fuchsia-700 ${className}`}
+      className={`text-primary-600 dark:text-primary-500 hover:text-primary-700 focus:text-primary-700 ${className}`}
       {...props}
     >
       {children}

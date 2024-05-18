@@ -9,6 +9,7 @@ import {
   StepOneAWS,
   StepOneAzure,
 } from "@/components";
+import Card from "@/components/Card";
 
 export default async function Installer({ params, searchParams }) {
   const slug = params?.["installer-slug"];
@@ -58,41 +59,43 @@ export default async function Installer({ params, searchParams }) {
           <h2 className="text-xl font-semibold mb-4">
             Step 2: configure your install
           </h2>
-          <form
-            className="flex flex-col gap-4"
-            action={createInstall.bind(null, app)}
-          >
-            <label className="flex flex-col flex-auto gap-2">
-              <span className="font-semibold">Company name</span>
-              <input
-                className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
-                defaultValue={
-                  Object.hasOwn(searchParams, "name") ? searchParams?.name : ""
-                }
-                name="name"
-                type="text"
-                required
-              />
-            </label>
-            {app?.cloud_platform === "aws" && (
-              <AWSInstallerFormFields searchParams={searchParams} />
-            )}
+          <Card>
+            <form
+              className="flex flex-col w-full"
+              action={createInstall.bind(null, app)}
+            >
+              <label className="flex flex-col flex-auto gap-2">
+                <span className="font-semibold">Company name</span>
+                <input
+                  className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
+                  defaultValue={
+                    Object.hasOwn(searchParams, "name") ? searchParams?.name : ""
+                  }
+                  name="name"
+                  type="text"
+                  required
+                />
+              </label>
+              {app?.cloud_platform === "aws" && (
+                <AWSInstallerFormFields searchParams={searchParams} />
+              )}
 
-            {app?.cloud_platform === "azure" && (
-              <AzureInstallerFormFields searchParams={searchParams} />
-            )}
+              {app?.cloud_platform === "azure" && (
+                <AzureInstallerFormFields searchParams={searchParams} />
+              )}
 
-            {app?.input_config?.app_inputs && (
-              <AppInputFields
-                inputs={app?.input_config?.app_inputs}
-                searchParams={searchParams}
-              />
-            )}
+              {app?.input_config?.app_inputs && (
+                <AppInputFields
+                  inputs={app?.input_config?.app_inputs}
+                  searchParams={searchParams}
+                />
+              )}
 
-            <button className="rounded text-sm text-gray-50 bg-fuchsia-600 hover:bg-fuchsia-700 focus:bg-fuchsia-700 active:bg-fuchsia-800 px-4 py-1.5 w-fit">
-              Submit
-            </button>
-          </form>
+              <button className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit">
+                Submit
+              </button>
+            </form>
+          </Card>
         </div>
       </main>
     </>
