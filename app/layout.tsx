@@ -1,17 +1,16 @@
-import type {Metadata} from "next";
-import {Inter} from "next/font/google";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import React from "react";
 import showdown from "showdown";
-import {getInstaller} from "@/common";
-import {Link, PoweredByNuon} from "@/components";
+import { getInstaller } from "@/common";
+import { Link, PoweredByNuon } from "@/components";
 import "./globals.css";
 
 const markdown = new showdown.Converter();
-const inter = Inter({subsets: ["latin"]});
+const inter = Inter({ subsets: ["latin"] });
 
-export async function generateMetadata(
-): Promise<Metadata> {
-  const {metadata} = await getInstaller();
+export async function generateMetadata(): Promise<Metadata> {
+  const { metadata } = await getInstaller();
 
   return {
     title: metadata.name,
@@ -20,11 +19,11 @@ export async function generateMetadata(
       icon: metadata.favicon_url,
       shortcut: metadata.favicon_url,
     },
-  }
+  };
 }
 
 const missingData = {
-  orgName: 'Nuon',
+  orgName: "Nuon",
 };
 
 export default async function RootLayout({
@@ -32,7 +31,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const {metadata} = await getInstaller();
+  const { metadata } = await getInstaller();
 
   return (
     <html
@@ -47,9 +46,7 @@ export default async function RootLayout({
               {metadata.copyright_markdown ? (
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: markdown.makeHtml(
-                      metadata.copyright_markdown,
-                    ),
+                    __html: markdown.makeHtml(metadata.copyright_markdown),
                   }}
                 />
               ) : (
@@ -72,9 +69,7 @@ export default async function RootLayout({
               {metadata.footer_markdown ? (
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: markdown.makeHtml(
-                      metadata.footer_markdown,
-                    ),
+                    __html: markdown.makeHtml(metadata.footer_markdown),
                   }}
                 />
               ) : (
