@@ -1,7 +1,7 @@
 "use client";
 
 import React, { type FC } from "react";
-import {Button} from "./Button";
+import { Button } from "./Button";
 
 interface IScrollToButton extends React.HTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;

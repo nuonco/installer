@@ -7,7 +7,7 @@ The Nuon installer UI is a [Next.js](https://nextjs.org/) project bootstrapped w
 
 First, create a `.env.local` file then add your Nuon access token and org ID.
 
-``` bash
+```bash
 NUON_API_TOKEN='...'
 NUON_ORG_ID='...'
 NUON_INSTALLER_ID='...'
@@ -15,7 +15,7 @@ NUON_INSTALLER_ID='...'
 
 You can access this information using the [Nuon CLI](https://docs.nuon.co/cli) if you're unsure.
 
-``` bash
+```bash
 nuon orgs print-config
 ```
 
