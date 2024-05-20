@@ -1,15 +1,11 @@
-import {getInstaller} from "@/common";
-import {Link, Video} from "@/components";
+import { getInstaller } from "@/common";
+import { Link, Video } from "@/components";
 import Card from "@/components/Card";
 
-export default async function Home({searchParams}) {
-  const {
-    metadata,
-    apps,
-  } = await getInstaller();
+export default async function Home({ searchParams }) {
+  const { metadata, apps } = await getInstaller();
   const queryString = new URLSearchParams(searchParams).toString();
-  const demoUrl =
-    metadata.formated_demo_url || metadata.demo_url;
+  const demoUrl = metadata.formated_demo_url || metadata.demo_url;
   const isDemoUrlValid = /^((http|https):\/\/)/.test(demoUrl);
 
   return (
@@ -18,10 +14,7 @@ export default async function Home({searchParams}) {
         <div className="flex flex-col gap-4">
           <h1>
             <Link href={metadata.homepage_url}>
-              <img
-                src={metadata.logo_url}
-                alt={metadata.name}
-              />
+              <img src={metadata.logo_url} alt={metadata.name} />
             </Link>
           </h1>
         </div>
