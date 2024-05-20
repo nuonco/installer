@@ -31,7 +31,7 @@ export const Select: FC<{
       <ReactSelect
         value={value}
         onChange={(e) => {
-          setValue(e);
+          setValue(e as any);
         }}
         options={options as any}
         primaryColor={"primary"}

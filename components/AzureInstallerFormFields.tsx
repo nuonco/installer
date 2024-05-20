@@ -1,4 +1,25 @@
 import React, { type FC } from "react";
+import { Select } from "@/components";
+import { getCloudPlatformRegions, getFlagEmoji } from "@/common";
+
+export const AzureLocationSelect: FC<{ defaultValue?: string }> = async ({
+  defaultValue = "",
+}) => {
+  const regions = await getCloudPlatformRegions("azure");
+  const options = regions.map((o) => ({
+    value: o.value,
+    label: `${getFlagEmoji(o.icon.substring(5))} ${o.display_name}`,
+  }));
+
+  return (
+    <Select
+      defaultValue={defaultValue}
+      name="location"
+      options={options}
+      required
+    />
+  );
+};
 
 export const AzureInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
@@ -7,16 +28,12 @@ export const AzureInstallerFormFields: FC<{
     <>
       <label className="flex flex-col flex-auto gap-2">
         <span className="text-sm font-semibold">Azure location</span>
-        <input
-          className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
+        <AzureLocationSelect
           defaultValue={
             Object.hasOwn(searchParams, "location")
               ? searchParams?.location
               : ""
           }
-          name="location"
-          type="text"
-          required
         />
       </label>
 
