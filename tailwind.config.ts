@@ -8,20 +8,12 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: theme.darkMode as Config["darkMode"],
   safelist: [
     {
       pattern: /bg-(red|green|yellow)-(500|600)/,
     },
   ],
-  theme: {
-    extend: {
-      colors: {
-        white: theme.white,
-        black: theme.black,
-        primary: theme.primary,
-      },
-    },
-  },
+  darkMode: theme.darkMode as Config["darkMode"],
+  theme: theme.theme,
 };
 export default config;
