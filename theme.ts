@@ -7,7 +7,8 @@ export default {
       colors: {
         black: "#000000",
         white: "#ffffff",
-        primary: colors.fuchsia,
+        primary: colors.blue,
+        "page-background": "#3c5a9a08",
       },
     },
   },
