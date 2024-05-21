@@ -2,6 +2,123 @@
 
 import React, { type FC, useEffect, useState } from "react";
 
+// install status helpers
+type TStatus = { status: string; status_description: string };
+
+export function getSandboxStatus(runs: Record<string, any>[]): TStatus {
+  return {
+    status: runs?.[0]?.status || "error",
+    status_description:
+      runs?.[0]?.status_description || "Sandbox isn't provisioned",
+  };
+}
+
+export function getInstallComponentStatus(
+  components: Record<string, any>[],
+): TStatus {
+  let status = {
+    status: "waiting",
+    status_description: "Waiting on components to deploy",
+  };
+
+  if (
+    components.some(
+      (c) =>
+        c?.install_deploys?.[0]?.status === "failed" ||
+        c?.install_deploys?.[0]?.status === "error",
+    )
+  ) {
+    status = {
+      status: "failed",
+      status_description: "Some components have failed to deploy",
+    };
+  }
+
+  if (components.every((c) => c?.install_deploys?.[0]?.status === "active")) {
+    status = {
+      status: "active",
+      status_description: "All components are active",
+    };
+  }
+
+  if (components?.every((c) => c?.install_deploys?.length === 0)) {
+    status = {
+      status: "waiting",
+      status_description: "Components are not deployed",
+    };
+  }
+
+  return status;
+}
+
+export function getInstallStatus(statuses: TStatus[]): TStatus {
+  let status: TStatus = {
+    status: "waiting",
+    status_description: "Install is waiting for something",
+  };
+
+  if (statuses.some((s) => s?.status === "failed" || s?.status === "error")) {
+    status = {
+      status: "error",
+      status_description: "Something has gone wrong",
+    };
+  }
+
+  if (statuses.every((s) => s?.status === "active")) {
+    status = {
+      status: "active",
+      status_description: "Everything is working",
+    };
+  }
+
+  return status;
+}
+
+export type TFullInstallStatus = Record<
+  "componentStatus" | "installStatus" | "sandboxStatus",
+  TStatus
+>;
+
+export function getFullInstallStatus(
+  install: Record<string, any>,
+): TFullInstallStatus {
+  const sandboxStatus = getSandboxStatus(install?.install_sandbox_runs || []);
+  const componentStatus = getInstallComponentStatus(
+    install?.install_components || [],
+  );
+
+  return {
+    componentStatus,
+    installStatus: getInstallStatus([sandboxStatus, componentStatus]),
+    sandboxStatus,
+  };
+}
+
+export const InstallStatus: FC<{ install: Record<string, any> }> = ({
+  install,
+}) => {
+  const status = getFullInstallStatus(install);
+
+  return (
+    <div className="flex flex-col gap-6">
+      <span>
+        <span className="text-sm font-bold">Install sandbox</span>
+        <Status
+          status={status?.sandboxStatus?.status}
+          status_description={status?.sandboxStatus?.status_description}
+        />
+      </span>
+      <span>
+        <span className="text-sm font-bold">Install application</span>
+        <Status
+          status={status?.componentStatus?.status}
+          status_description={status?.componentStatus?.status_description}
+        />
+      </span>
+    </div>
+  );
+};
+
 export const Install: FC<{
   install: Record<string, any>;
 }> = ({ install }) => {
@@ -34,11 +151,8 @@ export const Install: FC<{
   ) : (
     <>
       <span className="text-xs">{data?.id}</span>
-      <h1 className="text-5xl leading-relaxed">{data?.name}</h1>
-      <Status
-        status={data?.status}
-        status_description={data?.status_description}
-      />
+      <h1 className="text-4xl leading-relaxed">{data?.name}</h1>
+      <InstallStatus install={install} />
     </>
   );
 };
@@ -51,7 +165,7 @@ const Status: FC<{ status: string; status_description: string }> = ({
     status === "provisioning"
       ? "yellow-500"
       : status === "active"
-        ? "green-500"
+        ? "green-600"
         : "red-500";
 
   return (
