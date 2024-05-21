@@ -11,7 +11,7 @@ const config: Config = {
   ],
   safelist: [
     {
-      pattern: /bg-(red|green|yellow)-(500|600)/,
+      pattern: /(bg|text)-(red|green|yellow)-(500|600)/,
     },
   ],
   darkMode: theme.darkMode as Config["darkMode"],
