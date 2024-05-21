@@ -6,7 +6,7 @@ export default function Card({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col gap-2 rounded bg-white dark:bg-white p-6 items-start rounded border-black border-2">
+    <div className="flex flex-col gap-2 rounded bg-card-background dark:bg-white p-6 items-start rounded border-card-border border-2">
       {children}
     </div>
   );

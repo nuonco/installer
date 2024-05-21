@@ -9,6 +9,8 @@ export default {
         white: "#ffffff",
         primary: colors.blue,
         "page-background": "#3c5a9a08",
+        "card-border": "transparent",
+        "card-background": "#ffffff",
       },
     },
   },
