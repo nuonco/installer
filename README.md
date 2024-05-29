@@ -59,3 +59,18 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Self-hosted with Docker image
+
+Next.js can be deployed to any hosting provider that supports Docker containers.
+
+With Docker installed on your machine you can build and run your Installer UI in a Docker container. First you'll need to copy your env values to a `.env` file then build and run the Docker container.
+
+``` bash
+# copy .env.local
+cp .env.local .env
+# build container
+docker build -t installer-docker .
+# run container
+docker run -p 3000:3000 installer-docker
+```
