@@ -5,7 +5,7 @@ import Card from "@/components/Card";
 export default async function Home({ searchParams }) {
   const { metadata, apps } = await getInstaller();
   const queryString = new URLSearchParams(searchParams).toString();
-  const demoUrl = metadata.formated_demo_url || metadata.demo_url;
+  const demoUrl = metadata.formatted_demo_url || metadata.demo_url;
   const isDemoUrlValid = /^((http|https):\/\/)/.test(demoUrl);
 
   return (
