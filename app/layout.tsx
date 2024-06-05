@@ -19,6 +19,25 @@ export async function generateMetadata(): Promise<Metadata> {
       icon: metadata.favicon_url,
       shortcut: metadata.favicon_url,
     },
+    openGraph: {
+      title: metadata.name,
+      description: metadata.description,
+      type: "website",
+      images: [
+        {
+          url: metadata.logo_url,
+        },
+      ],
+    },
+    twitter: {
+      title: metadata.name,
+      description: metadata.description,
+      images: [
+        {
+          url: metadata.logo_url,
+        },
+      ],
+    },
   };
 }
 
