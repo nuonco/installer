@@ -94,7 +94,7 @@ export default async function Installer({ params, searchParams }) {
                 />
               )}
 
-              <Button className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit">
+              <Button className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit mt-4">
                 Submit
               </Button>
             </form>
