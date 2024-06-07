@@ -87,14 +87,14 @@ export default async function Installer({ params, searchParams }) {
                 <AzureInstallerFormFields searchParams={searchParams} />
               )}
 
-              {app?.input_config?.app_inputs && (
+              {app?.input_config?.inputs && (
                 <AppInputFields
-                  inputs={app?.input_config?.app_inputs}
+                  inputs={app?.input_config?.inputs}
                   searchParams={searchParams}
                 />
               )}
 
-              <Button className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit">
+              <Button className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit mt-4">
                 Submit
               </Button>
             </form>
