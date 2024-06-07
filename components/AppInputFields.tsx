@@ -5,9 +5,7 @@ export const AppInputFields: FC<{
   searchParams?: Record<string, string>;
 }> = ({ inputs, searchParams = {} }) => {
   return (
-    <fieldset className="flex flex-col gap-4">
-      <legend className="text-lg font-semibold mb-2">App inputs</legend>
-
+    <fieldset className="flex flex-col gap-4 mt-4">
       {inputs?.map((input) => (
         <label className="flex flex-col flex-auto gap-2" key={input?.id}>
           <span className="text-sm font-semibold">

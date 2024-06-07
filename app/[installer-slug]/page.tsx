@@ -87,9 +87,9 @@ export default async function Installer({ params, searchParams }) {
                 <AzureInstallerFormFields searchParams={searchParams} />
               )}
 
-              {app?.input_config?.app_inputs && (
+              {app?.input_config?.inputs && (
                 <AppInputFields
-                  inputs={app?.input_config?.app_inputs}
+                  inputs={app?.input_config?.inputs}
                   searchParams={searchParams}
                 />
               )}
