@@ -1,12 +1,16 @@
-import {
-  createInstall,
-  getInstall,
-  redeployInstall,
-} from "@/app/[installer-slug]/actions";
+import { createInstall } from "@/app/[installer-slug]/actions";
 import { getAppBySlug, getInstaller } from "@/common";
-import { Link } from "@/components";
-import InstallStepper from "@/components/InstallStepper";
-import { getCloudPlatformRegions } from "@/common";
+import {
+  AWSInstallerFormFields,
+  AppInputFields,
+  AzureInstallerFormFields,
+  Link,
+  ScrollToButton,
+  StepOneAWS,
+  StepOneAzure,
+  Button,
+} from "@/components";
+import Card from "@/components/Card";
 
 export default async function Installer({ params, searchParams }) {
   const slug = params?.["installer-slug"];
@@ -14,41 +18,88 @@ export default async function Installer({ params, searchParams }) {
     getAppBySlug(slug),
     getInstaller(),
   ]);
-  const regions = await getCloudPlatformRegions(app.cloud_platform);
 
   return (
     <>
-      <header className="flex flex-col gap-4">
-        <div className="flex justify-between items-center pt-4">
+      <header className="flex flex-auto flex-col gap-12 md:gap-24">
+        <div className="flex flex-col gap-4">
+          <h1>
+            <Link href={installer?.metadata?.homepage_url}>
+              <img
+                src={installer?.metadata?.logo_url}
+                alt={installer?.metadata?.name}
+              />
+            </Link>
+          </h1>
+        </div>
+
+        <p className="text-4xl text-center leading-relaxed">
+          {app?.description}
+        </p>
+
+        <div className="flex flex-wrap gap-6 w-fit m-auto justify-center items-center">
           <Link className="w-fit" href="/">
             {"< Other installation options"}
           </Link>
-          <Link href={installer?.metadata?.homepage_url}>
-            <img
-              className="inline-block"
-              src={installer?.metadata?.logo_url}
-              alt={installer?.metadata?.name}
-            />
-          </Link>
-        </div>
 
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold mb-2">{app.name}</h1>
-          <p>{app?.description}</p>
+          <ScrollToButton elementId="steps">Install {app?.name}</ScrollToButton>
         </div>
       </header>
+      <main
+        className="flex-auto grid grid-cols-1 md:grid-cols-2 gap-12 pt-12"
+        id="steps"
+      >
+        <div>
+          {app?.cloud_platform === "azure" ? (
+            <StepOneAzure />
+          ) : (
+            <StepOneAWS app={app} />
+          )}
+        </div>
+        <div>
+          <h2 className="text-xl font-semibold mb-4">
+            Step 2: configure your install
+          </h2>
+          <Card>
+            <form
+              className="flex flex-col w-full"
+              action={createInstall.bind(null, app)}
+            >
+              <label className="flex flex-col flex-auto gap-2">
+                <span className="font-semibold">Company name</span>
+                <input
+                  className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
+                  defaultValue={
+                    Object.hasOwn(searchParams, "name")
+                      ? searchParams?.name
+                      : ""
+                  }
+                  name="name"
+                  type="text"
+                  required
+                />
+              </label>
+              {app?.cloud_platform === "aws" && (
+                <AWSInstallerFormFields searchParams={searchParams} />
+              )}
 
-      <main className="flex-auto" id="steps">
-        <InstallStepper
-          app={app}
-          installer={installer}
-          existingInstall={null}
-          searchParams={searchParams}
-          createInstall={createInstall}
-          getInstall={getInstall}
-          redeployInstall={redeployInstall}
-          regions={regions}
-        />
+              {app?.cloud_platform === "azure" && (
+                <AzureInstallerFormFields searchParams={searchParams} />
+              )}
+
+              {app?.input_config?.inputs && (
+                <AppInputFields
+                  inputs={app?.input_config?.inputs}
+                  searchParams={searchParams}
+                />
+              )}
+
+              <Button className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit mt-4">
+                Submit
+              </Button>
+            </form>
+          </Card>
+        </div>
       </main>
     </>
   );
