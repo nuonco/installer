@@ -161,12 +161,12 @@ const Status: FC<{ status: string; status_description: string }> = ({
   status,
   status_description,
 }) => {
-  const clr =
-    status === "provisioning"
-      ? "yellow-500"
-      : status === "active"
-        ? "green-600"
-        : "red-500";
+  let clr = "yellow-500";
+  if (status === "active") {
+    clr = "green-600";
+  } else if (status === "error") {
+    clr = "red-500";
+  }
 
   return (
     <span className="text-sm">
