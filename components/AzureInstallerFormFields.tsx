@@ -25,10 +25,9 @@ export const AzureInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
 }> = ({ searchParams = {} }) => {
   return (
-    <fieldset>
-      <legend>Azure Account</legend>
+    <fieldset className="p-4">
       <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">Azure location</span>
+        <span className="text-sm font-medium">Location</span>
         <AzureLocationSelect
           defaultValue={
             Object.hasOwn(searchParams, "location")
@@ -39,9 +38,7 @@ export const AzureInstallerFormFields: FC<{
       </label>
 
       <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">
-          Azure service principal app ID
-        </span>
+        <span className="text-sm font-medium">Service principal app ID</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
@@ -56,9 +53,7 @@ export const AzureInstallerFormFields: FC<{
       </label>
 
       <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">
-          Azure service principal password
-        </span>
+        <span className="text-sm font-medium">Service principal password</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
@@ -73,7 +68,7 @@ export const AzureInstallerFormFields: FC<{
       </label>
 
       <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">Azure subscription ID</span>
+        <span className="text-sm font-medium">Subscription ID</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
@@ -88,9 +83,7 @@ export const AzureInstallerFormFields: FC<{
       </label>
 
       <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">
-          Azure subscription tenant ID
-        </span>
+        <span className="text-sm font-medium">Subscription tenant ID</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={

@@ -5,12 +5,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        black: "#000000",
-        white: "#ffffff",
+        black: colors.black,
+        white: colors.white,
         primary: colors.fuchsia,
-        "page-background": "#ffffff",
-        "card-border": "#000000",
-        "card-background": "#ffffff",
+        "page-background": colors.white,
+        "card-border": colors.black,
+        "card-background": colors.white,
+        "accordion-header-color": colors.black,
+        "accordion-header-background": colors.gray["100"],
       },
     },
   },

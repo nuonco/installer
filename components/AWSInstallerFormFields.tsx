@@ -25,10 +25,9 @@ export const AWSInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
 }> = ({ searchParams = {} }) => {
   return (
-    <fieldset>
-      <legend>AWS Account</legend>
+    <fieldset className="p-4">
       <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">AWS IAM role ARN</span>
+        <span className="text-sm font-medium">AWS IAM role ARN</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
@@ -43,7 +42,7 @@ export const AWSInstallerFormFields: FC<{
       </label>
 
       <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">AWS Region</span>
+        <span className="text-sm font-medium">AWS Region</span>
         <AWSRegionSelect
           defaultValue={
             Object.hasOwn(searchParams, "region") ? searchParams?.region : ""

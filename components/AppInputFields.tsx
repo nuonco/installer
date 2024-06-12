@@ -8,7 +8,7 @@ export const AppInputFields: FC<{
     <fieldset className="flex flex-col gap-4 mt-4">
       {inputs?.map((input) => (
         <label className="flex flex-col flex-auto gap-2" key={input?.id}>
-          <span className="text-sm font-semibold">
+          <span className="text-sm font-medium">
             {input?.display_name || input?.name}
           </span>
           <input

@@ -5,11 +5,10 @@ export const InputFields: FC<{
   searchParams?: Record<string, string>;
 }> = ({ group, inputs, searchParams = {} }) => {
   return (
-    <fieldset key={group.id} name={group.name}>
-      <legend>{group.display_name}</legend>
+    <fieldset key={group.id} name={group.name} className="p-4">
       {group.app_inputs.map((input) => (
         <label className="flex flex-col flex-auto gap-2" key={input?.id}>
-          <span className="text-sm font-semibold">
+          <span className="text-sm font-medium">
             {input?.display_name || input?.name}
           </span>
           <input
