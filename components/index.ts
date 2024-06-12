@@ -1,5 +1,6 @@
 export * from "./AWSInstallerFormFields";
 export * from "./AppInputFields";
+export * from "./InputFields";
 export * from "./AzureInstallerFormFields";
 export * from "./Install";
 export * from "./Link";

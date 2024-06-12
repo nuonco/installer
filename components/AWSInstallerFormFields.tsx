@@ -25,7 +25,8 @@ export const AWSInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
 }> = ({ searchParams = {} }) => {
   return (
-    <>
+    <fieldset>
+      <legend>AWS Account</legend>
       <label className="flex flex-col flex-auto gap-2">
         <span className="text-sm font-semibold">AWS IAM role ARN</span>
         <input
@@ -49,6 +50,6 @@ export const AWSInstallerFormFields: FC<{
           }
         />
       </label>
-    </>
+    </fieldset>
   );
 };

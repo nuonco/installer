@@ -25,7 +25,8 @@ export const AzureInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
 }> = ({ searchParams = {} }) => {
   return (
-    <>
+    <fieldset>
+      <legend>Azure Account</legend>
       <label className="flex flex-col flex-auto gap-2">
         <span className="text-sm font-semibold">Azure location</span>
         <AzureLocationSelect
@@ -102,6 +103,6 @@ export const AzureInstallerFormFields: FC<{
           required
         />
       </label>
-    </>
+    </fieldset>
   );
 };

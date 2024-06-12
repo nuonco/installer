@@ -2,7 +2,7 @@ import { createInstall } from "@/app/[installer-slug]/actions";
 import { getAppBySlug, getInstaller } from "@/common";
 import {
   AWSInstallerFormFields,
-  AppInputFields,
+  InputFields,
   AzureInstallerFormFields,
   Link,
   ScrollToButton,
@@ -18,6 +18,8 @@ export default async function Installer({ params, searchParams }) {
     getAppBySlug(slug),
     getInstaller(),
   ]);
+
+  console.log(app.input_config.input_groups);
 
   return (
     <>
@@ -65,20 +67,23 @@ export default async function Installer({ params, searchParams }) {
               className="flex flex-col w-full"
               action={createInstall.bind(null, app)}
             >
-              <label className="flex flex-col flex-auto gap-2">
-                <span className="font-semibold">Company name</span>
-                <input
-                  className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
-                  defaultValue={
-                    Object.hasOwn(searchParams, "name")
-                      ? searchParams?.name
-                      : ""
-                  }
-                  name="name"
-                  type="text"
-                  required
-                />
-              </label>
+              <fieldset>
+                <label className="flex flex-col flex-auto gap-2">
+                  <span className="font-semibold">Company name</span>
+                  <input
+                    className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
+                    defaultValue={
+                      Object.hasOwn(searchParams, "name")
+                        ? searchParams?.name
+                        : ""
+                    }
+                    name="name"
+                    type="text"
+                    required
+                  />
+                </label>
+              </fieldset>
+
               {app?.cloud_platform === "aws" && (
                 <AWSInstallerFormFields searchParams={searchParams} />
               )}
@@ -87,12 +92,9 @@ export default async function Installer({ params, searchParams }) {
                 <AzureInstallerFormFields searchParams={searchParams} />
               )}
 
-              {app?.input_config?.inputs && (
-                <AppInputFields
-                  inputs={app?.input_config?.inputs}
-                  searchParams={searchParams}
-                />
-              )}
+              {app.input_config.input_groups.map((group: any) => (
+                <InputFields group={group} searchParams={searchParams} />
+              ))}
 
               <Button className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit mt-4">
                 Submit
