@@ -1,17 +1,8 @@
-import { createInstall } from "@/app/[installer-slug]/actions";
+import { createInstall, getInstall } from "@/app/[installer-slug]/actions";
 import { getAppBySlug, getInstaller } from "@/common";
-import {
-  AWSInstallerFormFields,
-  InputFields,
-  AzureInstallerFormFields,
-  Link,
-  ScrollToButton,
-  StepOneAWS,
-  StepOneAzure,
-  Button,
-} from "@/components";
-import { Accordion, Tab } from "@/components/Accordion";
-import Card from "@/components/Card";
+import { Link } from "@/components";
+import InstallStepper from "@/components/InstallStepper";
+import { getCloudPlatformRegions } from "@/common";
 
 export default async function Installer({ params, searchParams }) {
   const slug = params?.["installer-slug"];
@@ -19,99 +10,40 @@ export default async function Installer({ params, searchParams }) {
     getAppBySlug(slug),
     getInstaller(),
   ]);
+  const regions = await getCloudPlatformRegions(app.cloud_platform);
 
   return (
     <>
-      <header className="flex flex-auto flex-col gap-12 md:gap-24">
-        <div className="flex flex-col gap-4">
-          <h1>
-            <Link href={installer?.metadata?.homepage_url}>
-              <img
-                src={installer?.metadata?.logo_url}
-                alt={installer?.metadata?.name}
-              />
-            </Link>
-          </h1>
-        </div>
-
-        <p className="text-4xl text-center leading-relaxed">
-          {app?.description}
-        </p>
-
-        <div className="flex flex-wrap gap-6 w-fit m-auto justify-center items-center">
+      <header className="grid grid-cols-3 gap-4">
+        <div className="col-span-1 items-center pt-4">
           <Link className="w-fit" href="/">
             {"< Other installation options"}
           </Link>
-
-          <ScrollToButton elementId="steps">Install {app?.name}</ScrollToButton>
         </div>
+
+        <div className="col-span-1">
+          <Link href={installer?.metadata?.homepage_url}>
+            <img
+              className="m-auto"
+              src={installer?.metadata?.logo_url}
+              alt={installer?.metadata?.name}
+            />
+          </Link>
+        </div>
+
+        <p className="col-span-3 text-4xl text-center leading-relaxed">
+          {app?.description}
+        </p>
       </header>
-      <main
-        className="flex-auto grid grid-cols-1 md:grid-cols-2 gap-12 pt-12"
-        id="steps"
-      >
-        <div>
-          {app?.cloud_platform === "azure" ? (
-            <StepOneAzure />
-          ) : (
-            <StepOneAWS app={app} />
-          )}
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-4">
-            Step 2: configure your install
-          </h2>
 
-          <Card>
-            <form
-              className="flex flex-col w-full"
-              action={createInstall.bind(null, app)}
-            >
-              <Accordion>
-                <Tab label="Company">
-                  <fieldset className="p-4">
-                    <label className="flex flex-col flex-auto gap-2">
-                      <span className="text-sm font-medium">Name</span>
-                      <input
-                        className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
-                        defaultValue={
-                          Object.hasOwn(searchParams, "name")
-                            ? searchParams?.name
-                            : ""
-                        }
-                        name="name"
-                        type="text"
-                        required
-                      />
-                    </label>
-                  </fieldset>
-                </Tab>
-
-                {app?.cloud_platform === "aws" && (
-                  <Tab label="AWS Account">
-                    <AWSInstallerFormFields searchParams={searchParams} />
-                  </Tab>
-                )}
-
-                {app?.cloud_platform === "azure" && (
-                  <Tab label="Azure Account">
-                    <AzureInstallerFormFields searchParams={searchParams} />
-                  </Tab>
-                )}
-
-                {app.input_config.input_groups.map((group: any) => (
-                  <Tab label={group.display_name}>
-                    <InputFields group={group} searchParams={searchParams} />
-                  </Tab>
-                ))}
-
-                <Button className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit m-4">
-                  Submit
-                </Button>
-              </Accordion>
-            </form>
-          </Card>
-        </div>
+      <main className="flex-auto" id="steps">
+        <InstallStepper
+          app={app}
+          searchParams={searchParams}
+          createInstall={createInstall}
+          getInstall={getInstall}
+          regions={regions}
+        />
       </main>
     </>
   );

@@ -58,7 +58,7 @@ export default async function RootLayout({
       lang="en"
     >
       <body className={`${inter.className} w-full h-dvh`}>
-        <div className="flex flex-col w-full max-w-5xl mx-auto p-6 py-12 md:py-24 gap-12 md:gap-24">
+        <div className="flex flex-col w-full max-w-5xl mx-auto p-6 py-12 gap-12 md:gap-24">
           {children}
           <footer className="flex items-center justify-between">
             <div className="flex gap-2 items-center">

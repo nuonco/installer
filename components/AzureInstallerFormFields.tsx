@@ -1,11 +1,11 @@
 import React, { type FC } from "react";
 import { Select } from "@/components";
-import { getCloudPlatformRegions, getFlagEmoji } from "@/common";
+import { getFlagEmoji } from "@/common";
 
-export const AzureLocationSelect: FC<{ defaultValue?: string }> = async ({
-  defaultValue = "",
-}) => {
-  const regions = await getCloudPlatformRegions("azure");
+export const AzureLocationSelect: FC<{
+  defaultValue?: string;
+  regions: Array<Object>;
+}> = ({ defaultValue = "", regions = [] }) => {
   const options = regions.map((o) => ({
     value: o.value,
     label: `${getFlagEmoji(o.icon.substring(5))} ${o.display_name}`,
@@ -23,7 +23,8 @@ export const AzureLocationSelect: FC<{ defaultValue?: string }> = async ({
 
 export const AzureInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
-}> = ({ searchParams = {} }) => {
+  regions: Array<Object>;
+}> = ({ searchParams = {}, regions }) => {
   return (
     <fieldset className="p-4">
       <label className="flex flex-col flex-auto gap-2">
@@ -34,6 +35,7 @@ export const AzureInstallerFormFields: FC<{
               ? searchParams?.location
               : ""
           }
+          regions={regions}
         />
       </label>
 

@@ -1,11 +1,11 @@
 import React, { type FC } from "react";
 import { Select } from "@/components";
-import { getCloudPlatformRegions, getFlagEmoji } from "@/common";
+import { getFlagEmoji } from "@/common";
 
-export const AWSRegionSelect: FC<{ defaultValue?: string }> = async ({
-  defaultValue = "",
-}) => {
-  const regions = await getCloudPlatformRegions("aws");
+export const AWSRegionSelect: FC<{
+  defaultValue?: string;
+  regions: Array<Object>;
+}> = ({ defaultValue = "", regions = [] }) => {
   const options = regions.map((o) => ({
     value: o.value,
     label: `${getFlagEmoji(o.icon.substring(5))} ${o.display_name}`,
@@ -23,7 +23,8 @@ export const AWSRegionSelect: FC<{ defaultValue?: string }> = async ({
 
 export const AWSInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
-}> = ({ searchParams = {} }) => {
+  regions: Array<Object>;
+}> = ({ searchParams = {}, regions }) => {
   return (
     <fieldset className="p-4">
       <label className="flex flex-col flex-auto gap-2">
@@ -47,6 +48,7 @@ export const AWSInstallerFormFields: FC<{
           defaultValue={
             Object.hasOwn(searchParams, "region") ? searchParams?.region : ""
           }
+          regions={regions}
         />
       </label>
     </fieldset>

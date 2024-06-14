@@ -55,8 +55,10 @@ export async function getInstall(id: string): Promise<Record<string, any>> {
   return res.json();
 }
 
-export async function getCloudPlatformRegions(platform: string): Promise<Array<Record<string, any>>> {
-    const res = await fetch(
+export async function getCloudPlatformRegions(
+  platform: string,
+): Promise<Array<Record<string, any>>> {
+  const res = await fetch(
     `${NUON_API_URL}/v1/general/cloud-platform/${platform}/regions`,
     {
       cache: "no-store",
@@ -75,10 +77,10 @@ export async function getCloudPlatformRegions(platform: string): Promise<Array<R
   return res.json();
 }
 
-export function getFlagEmoji(countryCode = 'us') {
+export function getFlagEmoji(countryCode = "us") {
   const codePoints = countryCode
     .toUpperCase()
-    .split('')
-    .map((char) => 127397 + char.charCodeAt(0))
-  return String.fromCodePoint(...codePoints)
+    .split("")
+    .map((char) => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
 }
