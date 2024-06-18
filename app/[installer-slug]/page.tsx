@@ -1,4 +1,9 @@
-import { createInstall, getInstall } from "@/app/[installer-slug]/actions";
+import {
+  createInstall,
+  getInstall,
+  updateInstall,
+  reprovisionInstall,
+} from "@/app/[installer-slug]/actions";
 import { getAppBySlug, getInstaller } from "@/common";
 import { Link } from "@/components";
 import InstallStepper from "@/components/InstallStepper";
@@ -42,6 +47,8 @@ export default async function Installer({ params, searchParams }) {
           searchParams={searchParams}
           createInstall={createInstall}
           getInstall={getInstall}
+          updateInstall={updateInstall}
+          reprovisionInstall={reprovisionInstall}
           regions={regions}
         />
       </main>

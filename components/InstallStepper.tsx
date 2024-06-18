@@ -22,7 +22,9 @@ const InstallStepper = ({
   searchParams,
   regions,
   createInstall,
+  updateInstall,
   getInstall,
+  reprovisionInstall,
 }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
@@ -41,8 +43,13 @@ const InstallStepper = ({
   // create install when form is submitted
   const formAction = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const res = await createInstall(app, formData);
+    if (install.id === "") {
+      const formData = new FormData(event.target);
+      const res = await createInstall(app, formData);
+    } else {
+      updateInstall(install);
+      reprovisionInstall(install.id);
+    }
     setInstall(res);
   };
 
