@@ -43,7 +43,7 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
 
           <Link
             className="text-sm mt-4"
-            href={`https://us-west-2.console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateUrl=${app?.sandbox_config?.artifacts?.cloudformation_stack_template}&stackName=nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`}
+            href={`https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateUrl=${app?.sandbox_config?.artifacts?.cloudformation_stack_template}&stackName=nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`}
             target="_blank"
             rel="noreferrer"
           >
