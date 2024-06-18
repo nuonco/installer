@@ -79,8 +79,16 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
 
         <div className="flex gap-2 mt-4 items-center">
           <Link
+<<<<<<< HEAD
             className="text-sm"
             href={app?.sandbox_config?.artifacts?.trust_policy}
+||||||| parent of 20f94f3 (fix: open aws install acccess cloudformation in currently-selected (#28))
+            className="text-sm mt-4"
+            href={`https://us-west-2.console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateUrl=${app?.sandbox_config?.artifacts?.cloudformation_stack_template}&stackName=nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`}
+=======
+            className="text-sm mt-4"
+            href={`https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateUrl=${app?.sandbox_config?.artifacts?.cloudformation_stack_template}&stackName=nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`}
+>>>>>>> 20f94f3 (fix: open aws install acccess cloudformation in currently-selected (#28))
             target="_blank"
             rel="noreferrer"
           >
