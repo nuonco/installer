@@ -44,6 +44,7 @@ export default async function Installer({ params, searchParams }) {
       <main className="flex-auto" id="steps">
         <InstallStepper
           app={app}
+          installer={installer}
           searchParams={searchParams}
           createInstall={createInstall}
           getInstall={getInstall}

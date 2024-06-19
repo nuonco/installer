@@ -8,6 +8,7 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
+  Alert,
 } from "@material-tailwind/react";
 import {
   AWSInstallerFormFields,
@@ -15,10 +16,17 @@ import {
   AzureInstallerFormFields,
   StepOneAWS,
   StepOneAzure,
+  Link,
 } from "../components";
+import { InstallStatus } from "./InstallStatus";
+import StatusIcon from "./StatusIcon";
+import showdown from "showdown";
+
+const markdown = new showdown.Converter();
 
 const InstallStepper = ({
   app,
+  installer,
   searchParams,
   regions,
   createInstall,
@@ -38,19 +46,61 @@ const InstallStepper = ({
   ));
 
   // track state of install
-  const [install, setInstall] = React.useState({ id: "" });
+  const [install, setInstall] = React.useState({
+    id: "",
+    status: "not created",
+    status_description: "No install has been created yet.",
+    install_components: [],
+  });
+  const [error, setError] = React.useState({
+    description: "",
+    error: "",
+    user_error: false,
+  });
 
-  // create install when form is submitted
+  // create or update install when form is submitted
   const formAction = async (event) => {
     event.preventDefault();
+
+    const formData = new FormData(event.target);
+    let installID = "";
     if (install.id === "") {
-      const formData = new FormData(event.target);
+      // if we haven't created the install yet, create it
       const res = await createInstall(app, formData);
+      if (res.error) {
+        setError(res);
+        return;
+      }
+      installID = res.id;
     } else {
-      updateInstall(install);
-      reprovisionInstall(install.id);
+      // if we've already created the install, update it and reprovision
+      const updateRes = updateInstall(formData);
+      if (updateRes.error) {
+        setError(updateRes);
+        return;
+      }
+
+      const reproRes = reprovisionInstall(install.id);
+      if (reproRes.error) {
+        setError(reproRes);
+        return;
+      }
     }
+
+    // by this point we should have an install ID
+    // fetch the install so we can render the status
+    const res = await getInstall(installID);
+    if (res.error) {
+      setError(res);
+      return;
+    }
+
     setInstall(res);
+    setError({
+      description: "",
+      error: "",
+      user_error: false,
+    });
   };
 
   // poll for install status once we have an ID
@@ -76,7 +126,10 @@ const InstallStepper = ({
       const res = await getInstall(install.id);
       setInstall(res);
     }
-  }, 1000 * 3);
+  }, 1000 * 5);
+
+  console.log("install: ", install);
+  console.log("error: ", error);
 
   const stepContent = app.input_config.input_groups.map((group, idx) => (
     <Accordion open={activeStep === idx + 2}>
@@ -86,6 +139,13 @@ const InstallStepper = ({
       </AccordionBody>
     </Accordion>
   ));
+
+  const errorAlert =
+    error.error !== "" ? (
+      <div className="fixed w-full right-0 bottom-0 left-0 p-4">
+        <Alert color="red">{error.description}</Alert>
+      </div>
+    ) : null;
 
   return (
     <div className="w-full p-4">
@@ -163,18 +223,37 @@ const InstallStepper = ({
         {...stepContent}
 
         <Accordion open={activeStep === steps.length + 2}>
-          <AccordionHeader>Install Status</AccordionHeader>
+          <AccordionHeader>
+            <span>
+              Install Status <StatusIcon status={install.status} />
+            </span>
+          </AccordionHeader>
           <AccordionBody>
-            <Button
-              type="submit"
-              className="rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit m-4"
-            >
-              Submit
-            </Button>
-            {JSON.stringify(install)}
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: markdown.makeHtml(
+                      installer?.metadata?.post_install_markdown,
+                    ),
+                  }}
+                />
+              </div>
+
+              <div>
+                <InstallStatus install={install} />
+                <Button
+                  type="submit"
+                  className="block mr-0 ml-auto rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit mt-4"
+                >
+                  {install.id === "" ? "Create Install" : "Update Install"}
+                </Button>
+              </div>
+            </div>
           </AccordionBody>
         </Accordion>
       </form>
+      {errorAlert}
     </div>
   );
 };
