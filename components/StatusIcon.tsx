@@ -1,6 +1,6 @@
 import React from "react";
 
-const StatusIcon: FC<{ status: string; status_description: string }> = ({
+export const StatusIcon: FC<{ status: string; status_description: string }> = ({
   status,
   className,
 }) => {
@@ -13,5 +13,3 @@ const StatusIcon: FC<{ status: string; status_description: string }> = ({
 
   return <span className={`text-${clr} ${className}`}>⏺</span>;
 };
-
-export default StatusIcon;

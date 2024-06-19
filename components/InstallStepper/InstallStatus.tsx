@@ -2,8 +2,7 @@
 
 import React from "react";
 
-import Card from "@/components/Card";
-import StatusIcon from "@/components/StatusIcon";
+import { Card, StatusIcon } from "@/components";
 
 export const InstallStatus: FC<{ install: Record<string, any> }> = ({
   install,

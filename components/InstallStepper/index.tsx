@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from "react";
 import {
-  ThemeProvider,
   Stepper,
   Step,
   Button,
@@ -18,12 +17,11 @@ import {
   AzureInstallerFormFields,
   StepOneAWS,
   StepOneAzure,
-  Link,
+  StatusIcon,
+  Card,
 } from "@/components";
 import { InstallStatus } from "./InstallStatus";
-import StatusIcon from "@/components/StatusIcon";
 import showdown from "showdown";
-import Card from "@/components/Card";
 
 const markdown = new showdown.Converter();
 

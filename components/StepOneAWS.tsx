@@ -1,6 +1,5 @@
 import React, { type FC } from "react";
-import { Link } from "@/components";
-import Card from "@/components/Card";
+import { Link, Card } from "@/components";
 
 export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
   return (

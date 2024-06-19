@@ -1,6 +1,5 @@
 import { getInstaller } from "@/common";
-import { Link, Video } from "@/components";
-import Card from "@/components/Card";
+import { Link, Video, Card } from "@/components";
 
 export default async function Home({ searchParams }) {
   const { metadata, apps } = await getInstaller();
