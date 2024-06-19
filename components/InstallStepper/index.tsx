@@ -2,9 +2,11 @@
 
 import React, { useEffect, useRef } from "react";
 import {
+  ThemeProvider,
   Stepper,
   Step,
   Button,
+  IconButton,
   Accordion,
   AccordionHeader,
   AccordionBody,
@@ -17,10 +19,11 @@ import {
   StepOneAWS,
   StepOneAzure,
   Link,
-} from "../components";
+} from "@/components";
 import { InstallStatus } from "./InstallStatus";
-import StatusIcon from "./StatusIcon";
+import StatusIcon from "@/components/StatusIcon";
 import showdown from "showdown";
+import Card from "@/components/Card";
 
 const markdown = new showdown.Converter();
 
@@ -41,15 +44,11 @@ const InstallStepper = ({
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
-  const steps = app.input_config.input_groups.map((group, idx) => (
-    <Step onClick={() => setActiveStep(idx + 2)}>{idx + 3}</Step>
-  ));
-
   // track state of install
   const [install, setInstall] = React.useState({
-    id: "",
+    id: searchParams.install_id || "",
     status: "not created",
-    status_description: "No install has been created yet.",
+    status_description: "install has not been created yet",
     install_components: [],
   });
   const [error, setError] = React.useState({
@@ -61,6 +60,8 @@ const InstallStepper = ({
   // create or update install when form is submitted
   const formAction = async (event) => {
     event.preventDefault();
+
+    console.log("event: ", event);
 
     const formData = new FormData(event.target);
     let installID = "";
@@ -132,12 +133,22 @@ const InstallStepper = ({
   console.log("error: ", error);
 
   const stepContent = app.input_config.input_groups.map((group, idx) => (
-    <Accordion open={activeStep === idx + 2}>
-      <AccordionHeader>{group.display_name}</AccordionHeader>
+    <Accordion key={idx} open={activeStep === idx + 2}>
+      <AccordionHeader onClick={() => setActiveStep(idx + 2)}>
+        {group.display_name}
+      </AccordionHeader>
       <AccordionBody>
-        <InputFields group={group} searchParams={searchParams} />
+        <Card>
+          <InputFields group={group} searchParams={searchParams} />
+        </Card>
       </AccordionBody>
     </Accordion>
+  ));
+
+  const steps = app.input_config.input_groups.map((group, idx) => (
+    <Step key={idx} onClick={() => setActiveStep(idx + 2)}>
+      {idx + 3}
+    </Step>
   ));
 
   const errorAlert =
@@ -148,73 +159,124 @@ const InstallStepper = ({
     ) : null;
 
   return (
-    <div className="w-full p-4">
+    <div className="relative w-full p-4">
       <Stepper
         activeStep={activeStep}
         isLastStep={(value) => setIsLastStep(value)}
         isFirstStep={(value) => setIsFirstStep(value)}
       >
         <Step onClick={() => setActiveStep(0)}>1</Step>
+
         <Step onClick={() => setActiveStep(1)}>2</Step>
+
         {...steps}
+
         <Step onClick={() => setActiveStep(steps.length + 2)}>
           {steps.length + 3}
         </Step>
       </Stepper>
 
-      <div className="mt-4 flex justify-between">
-        <Button onClick={handlePrev} disabled={isFirstStep}>
-          Prev
-        </Button>
-        <Button onClick={handleNext} disabled={isLastStep}>
-          Next
-        </Button>
+      <div className="absolute -left-8 -right-8 top-1/2 flex justify-between">
+        <IconButton
+          className="rounded-full"
+          onClick={handlePrev}
+          disabled={isFirstStep}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"
+            />
+          </svg>
+        </IconButton>
+        <IconButton
+          className="rounded-full"
+          onClick={handleNext}
+          disabled={isLastStep}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </IconButton>
       </div>
 
       <form className="mt-4" onSubmit={formAction}>
         <Accordion open={activeStep === 0}>
-          <AccordionHeader>Company</AccordionHeader>
+          <AccordionHeader onClick={() => setActiveStep(0)}>
+            Company Info
+          </AccordionHeader>
           <AccordionBody>
-            <fieldset className="p-4">
-              <label className="flex flex-col flex-auto gap-2">
-                <span className="text-sm font-medium">Name</span>
-                <input
-                  className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
-                  defaultValue={
-                    Object.hasOwn(searchParams, "name")
-                      ? searchParams?.name
-                      : ""
-                  }
-                  name="name"
-                  type="text"
-                  required
-                />
-              </label>
-            </fieldset>
+            <Card>
+              <fieldset className="p-4 w-full">
+                <label className="flex flex-col flex-auto gap-2">
+                  <span className="text-sm font-medium">Name</span>
+                  <input
+                    className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
+                    defaultValue={
+                      Object.hasOwn(searchParams, "name")
+                        ? searchParams?.name
+                        : ""
+                    }
+                    name="name"
+                    type="text"
+                    required
+                  />
+                </label>
+              </fieldset>
+            </Card>
           </AccordionBody>
         </Accordion>
 
         <Accordion open={activeStep == 1}>
           {app?.cloud_platform === "aws" && (
             <>
-              <AccordionHeader>AWS Account</AccordionHeader>
-              <AccordionBody>
-                <AWSInstallerFormFields
-                  searchParams={searchParams}
-                  regions={regions}
-                />
+              <AccordionHeader onClick={() => setActiveStep(1)}>
+                AWS IAM Role
+              </AccordionHeader>
+              <AccordionBody className="grid grid-cols-2 gap-4">
+                <StepOneAWS app={app} />
+                <Card>
+                  <AWSInstallerFormFields
+                    searchParams={searchParams}
+                    regions={regions}
+                  />
+                </Card>
               </AccordionBody>
             </>
           )}
 
           {app?.cloud_platform === "azure" && (
             <>
-              <AccordionHeader>Azure Account</AccordionHeader>
-              <AccordionBody>
-                <AzureInstallerFormFields
-                  searchParams={searchParams}
-                  regions={regions}
-                />
+              <AccordionHeader onClick={() => setActiveStep(1)}>
+                Azure Account
+              </AccordionHeader>
+              <AccordionBody className="grid grid-cols-2 gap-4">
+                <StepOneAzure />
+                <Card>
+                  <AzureInstallerFormFields
+                    searchParams={searchParams}
+                    regions={regions}
+                  />
+                </Card>
               </AccordionBody>
             </>
           )}
@@ -223,9 +285,12 @@ const InstallStepper = ({
         {...stepContent}
 
         <Accordion open={activeStep === steps.length + 2}>
-          <AccordionHeader>
+          <AccordionHeader onClick={() => setActiveStep(steps.length + 2)}>
             <span>
-              Install Status <StatusIcon status={install.status} />
+              Install Status <StatusIcon status={install.status} />{" "}
+              <span className="text-sm font-medium">
+                {install.status_description}
+              </span>
             </span>
           </AccordionHeader>
           <AccordionBody>
@@ -253,6 +318,7 @@ const InstallStepper = ({
           </AccordionBody>
         </Accordion>
       </form>
+
       {errorAlert}
     </div>
   );

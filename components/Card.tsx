@@ -9,7 +9,7 @@ export default function Card({
 }>) {
   return (
     <div
-      className={`flex flex-col gap-2 rounded bg-card-background dark:bg-white items-start rounded border-card-border border-2 ${className}`}
+      className={`flex flex-col gap-2 rounded bg-card-background dark:bg-white items-start border border-card-border shadow shadow-card-border ${className}`}
     >
       {children}
     </div>

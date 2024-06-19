@@ -9,7 +9,7 @@ export default {
         white: colors.white,
         primary: colors.fuchsia,
         "page-background": colors.white,
-        "card-border": colors.black,
+        "card-border": colors.gray["200"],
         "card-background": colors.white,
         "accordion-header-color": colors.black,
         "accordion-header-background": colors.gray["100"],

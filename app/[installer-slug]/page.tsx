@@ -19,26 +19,24 @@ export default async function Installer({ params, searchParams }) {
 
   return (
     <>
-      <header className="grid grid-cols-3 gap-4">
-        <div className="col-span-1 items-center pt-4">
-          <Link className="w-fit" href="/">
+      <header className="flex flex-col gap-4">
+        <div className="flex justify-between pt-4">
+          <Link className="w-fit pt-4" href="/">
             {"< Other installation options"}
           </Link>
-        </div>
-
-        <div className="col-span-1">
           <Link href={installer?.metadata?.homepage_url}>
             <img
-              className="m-auto"
+              className="inline-block"
               src={installer?.metadata?.logo_url}
               alt={installer?.metadata?.name}
             />
           </Link>
         </div>
 
-        <p className="col-span-3 text-4xl text-center leading-relaxed">
-          {app?.description}
-        </p>
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold mb-2">{app.name}</h1>
+          <p>{app?.description}</p>
+        </div>
       </header>
 
       <main className="flex-auto" id="steps">

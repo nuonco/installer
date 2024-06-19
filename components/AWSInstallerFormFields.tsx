@@ -26,7 +26,7 @@ export const AWSInstallerFormFields: FC<{
   regions: Array<Object>;
 }> = ({ searchParams = {}, regions }) => {
   return (
-    <fieldset className="p-4">
+    <fieldset className="p-4 w-full">
       <label className="flex flex-col flex-auto gap-2">
         <span className="text-sm font-medium">AWS IAM role ARN</span>
         <input
