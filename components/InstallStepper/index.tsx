@@ -112,7 +112,10 @@ const InstallStepper = ({
 
     useEffect(() => {
       function tick() {
-        savedCallback.current();
+        // `savedCallback.current()` works fine in dev, but fails the build.
+        // Basically, Typescript can't know if savedCallback.current is defined in the context of this closure,
+        // so we need to assert that it's a function in order for Typescript to accept it.
+        (savedCallback.current as () => {})();
       }
       if (delay !== null) {
         const id = setInterval(tick, delay);

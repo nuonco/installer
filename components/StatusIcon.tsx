@@ -1,6 +1,6 @@
-import React from "react";
+import React, { type FC } from "react";
 
-export const StatusIcon: FC<{ status: string; status_description: string }> = ({
+export const StatusIcon: FC<{ status: string; className?: string }> = ({
   status,
   className,
 }) => {

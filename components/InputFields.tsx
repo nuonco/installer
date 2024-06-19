@@ -3,7 +3,7 @@ import React, { type FC } from "react";
 export const InputFields: FC<{
   group: Record<string, any>;
   searchParams?: Record<string, string>;
-}> = ({ group, inputs, searchParams = {} }) => {
+}> = ({ group, searchParams = {} }) => {
   return (
     <fieldset key={group.id} name={group.name} className="p-4 w-full">
       {group.app_inputs.map((input) => (

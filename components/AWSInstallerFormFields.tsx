@@ -4,7 +4,7 @@ import { getFlagEmoji } from "@/common";
 
 export const AWSRegionSelect: FC<{
   defaultValue?: string;
-  regions: Array<Object>;
+  regions: Array<any>;
 }> = ({ defaultValue = "", regions = [] }) => {
   const options = regions.map((o) => ({
     value: o.value,

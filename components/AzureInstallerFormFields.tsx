@@ -4,7 +4,7 @@ import { getFlagEmoji } from "@/common";
 
 export const AzureLocationSelect: FC<{
   defaultValue?: string;
-  regions: Array<Object>;
+  regions: Array<Record<string, any>>;
 }> = ({ defaultValue = "", regions = [] }) => {
   const options = regions.map((o) => ({
     value: o.value,
@@ -23,7 +23,7 @@ export const AzureLocationSelect: FC<{
 
 export const AzureInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
-  regions: Array<Object>;
+  regions: Array<Record<string, any>>;
 }> = ({ searchParams = {}, regions }) => {
   return (
     <fieldset className="p-4 w-full">
