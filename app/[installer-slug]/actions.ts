@@ -78,3 +78,45 @@ export async function reprovisionInstall(
 
   return res.json();
 }
+
+export async function deployComponents(
+  id: string,
+): Promise<Record<string, any>> {
+  const res = await fetch(
+    `${NUON_API_URL}/v1/installs/${id}/components/deploy-all`,
+    {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
+        "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
+      },
+      method: "POST",
+    },
+  );
+
+  if (!res.ok) {
+    console.debug(await res.json());
+    throw new Error("Can't fetch install");
+  }
+
+  return res.json();
+}
+
+export async function redeployInstall(
+  id: string,
+  app: Record<string, any>,
+  formData: FormData,
+) {
+  const updateRes = await updateInstall(id, app, formData);
+  if (updateRes.error) {
+    return updateRes.json();
+  }
+
+  const reproRes = await reprovisionInstall(id);
+  if (reproRes.error) {
+    return reproRes.json();
+  }
+
+  const compRes = await deployComponents(id);
+  return await compRes.json();
+}

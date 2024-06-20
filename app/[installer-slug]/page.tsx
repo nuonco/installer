@@ -1,8 +1,7 @@
 import {
   createInstall,
   getInstall,
-  updateInstall,
-  reprovisionInstall,
+  redeployInstall,
 } from "@/app/[installer-slug]/actions";
 import { getAppBySlug, getInstaller } from "@/common";
 import { Link } from "@/components";
@@ -46,8 +45,7 @@ export default async function Installer({ params, searchParams }) {
           searchParams={searchParams}
           createInstall={createInstall}
           getInstall={getInstall}
-          updateInstall={updateInstall}
-          reprovisionInstall={reprovisionInstall}
+          redeployInstall={redeployInstall}
           regions={regions}
         />
       </main>

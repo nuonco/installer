@@ -2,6 +2,8 @@ export function installRequestBody(
   app: Record<string, any>,
   formData: FormData,
 ) {
+  console.log("formData: ", formData);
+
   const data = Object.fromEntries(formData);
   const inputs = Object.keys(data).reduce(
     (acc: Record<string, unknown>, key) => {

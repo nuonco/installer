@@ -31,9 +31,8 @@ const InstallStepper = ({
   searchParams,
   regions,
   createInstall,
-  updateInstall,
   getInstall,
-  reprovisionInstall,
+  redeployInstall,
 }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
@@ -72,14 +71,8 @@ const InstallStepper = ({
       }
       installID = res.id;
     } else {
-      // if we've already created the install, update it and reprovision
-      const updateRes = updateInstall(formData);
-      if (updateRes.error) {
-        setError(updateRes);
-        return;
-      }
-
-      const reproRes = reprovisionInstall(install.id);
+      // if we've already created the install, redeploy it
+      const reproRes = await redeployInstall(install.id, app, formData);
       if (reproRes.error) {
         setError(reproRes);
         return;
@@ -308,12 +301,7 @@ const InstallStepper = ({
 
               <div>
                 <InstallStatus install={install} />
-                <Button
-                  type="submit"
-                  className="block mr-0 ml-auto rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 w-fit mt-4"
-                >
-                  {install.id === "" ? "Create Install" : "Update Install"}
-                </Button>
+                <InstallButton install={install} />
               </div>
             </div>
           </AccordionBody>
@@ -322,6 +310,24 @@ const InstallStepper = ({
 
       {errorAlert}
     </div>
+  );
+};
+
+const InstallButton = ({ install }) => {
+  const loading = install.status === "provisioning";
+
+  let label = "Create Install";
+  if (install.id.length > 0) label = "Update Install";
+  if (loading) label = "Provisioning";
+
+  return (
+    <Button
+      loading={loading}
+      type="submit"
+      className="block mr-0 ml-auto rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 mt-4"
+    >
+      {label}
+    </Button>
   );
 };
 
