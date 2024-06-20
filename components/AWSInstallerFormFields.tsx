@@ -27,7 +27,7 @@ export const AWSInstallerFormFields: FC<{
 }> = ({ searchParams = {}, regions }) => {
   return (
     <fieldset className="p-4 w-full">
-      <label className="flex flex-col flex-auto gap-2">
+      <label className="mb-2 flex flex-col flex-auto gap-2">
         <span className="text-sm font-medium">AWS IAM role ARN</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
@@ -42,7 +42,7 @@ export const AWSInstallerFormFields: FC<{
         />
       </label>
 
-      <label className="flex flex-col flex-auto gap-2">
+      <label className="mb-2 flex flex-col flex-auto gap-2">
         <span className="text-sm font-medium">AWS Region</span>
         <AWSRegionSelect
           defaultValue={

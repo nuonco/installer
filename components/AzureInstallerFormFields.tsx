@@ -27,7 +27,7 @@ export const AzureInstallerFormFields: FC<{
 }> = ({ searchParams = {}, regions }) => {
   return (
     <fieldset className="p-4 w-full">
-      <label className="flex flex-col flex-auto gap-2">
+      <label className="mb-2 flex flex-col flex-auto gap-2">
         <span className="text-sm font-medium">Location</span>
         <AzureLocationSelect
           defaultValue={
@@ -39,7 +39,7 @@ export const AzureInstallerFormFields: FC<{
         />
       </label>
 
-      <label className="flex flex-col flex-auto gap-2">
+      <label className="mb-2 flex flex-col flex-auto gap-2">
         <span className="text-sm font-medium">Service principal app ID</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
@@ -54,7 +54,7 @@ export const AzureInstallerFormFields: FC<{
         />
       </label>
 
-      <label className="flex flex-col flex-auto gap-2">
+      <label className="mb-2 flex flex-col flex-auto gap-2">
         <span className="text-sm font-medium">Service principal password</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
@@ -69,7 +69,7 @@ export const AzureInstallerFormFields: FC<{
         />
       </label>
 
-      <label className="flex flex-col flex-auto gap-2">
+      <label className="mb-2 flex flex-col flex-auto gap-2">
         <span className="text-sm font-medium">Subscription ID</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
@@ -84,7 +84,7 @@ export const AzureInstallerFormFields: FC<{
         />
       </label>
 
-      <label className="flex flex-col flex-auto gap-2">
+      <label className="mb-2 flex flex-col flex-auto gap-2">
         <span className="text-sm font-medium">Subscription tenant ID</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
