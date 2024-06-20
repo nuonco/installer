@@ -123,10 +123,12 @@ const InstallStepper = ({
     }
   }, 1000 * 5);
 
+  console.log("app: ", app);
   console.log("install: ", install);
   console.log("error: ", error);
 
-  const stepContent = app.input_config.input_groups.map((group, idx) => (
+  const input_groups = app.input_config.input_groups || [];
+  const stepContent = input_groups.map((group, idx) => (
     <Accordion key={idx} open={activeStep === idx + 2}>
       <AccordionHeader onClick={() => setActiveStep(idx + 2)}>
         {group.display_name}
@@ -139,7 +141,7 @@ const InstallStepper = ({
     </Accordion>
   ));
 
-  const steps = app.input_config.input_groups.map((group, idx) => (
+  const steps = input_groups.map((group, idx) => (
     <Step key={idx} onClick={() => setActiveStep(idx + 2)}>
       {idx + 3}
     </Step>
