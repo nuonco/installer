@@ -14,7 +14,7 @@ export function installRequestBody(
     {},
   );
 
-  let input: Record<string, any> = {
+  let input: Record<string, unknown> = {
     inputs,
     name: data?.name,
   };

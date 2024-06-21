@@ -24,8 +24,7 @@ export const AzureLocationSelect: FC<{
 export const AzureInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
   regions: Array<Record<string, any>>;
-  azure_account: any | null;
-}> = ({ searchParams = {}, regions, azure_account }) => {
+}> = ({ searchParams = {}, regions }) => {
   return (
     <fieldset className="p-4 w-full">
       <label className="mb-2 flex flex-col flex-auto gap-2">
@@ -45,11 +44,9 @@ export const AzureInstallerFormFields: FC<{
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
-            azure_account
-              ? azure_account.service_principal_app_id
-              : Object.hasOwn(searchParams, "service_principal_app_id")
-                ? searchParams?.service_principal_app_id
-                : ""
+            Object.hasOwn(searchParams, "service_principal_app_id")
+              ? searchParams?.service_principal_app_id
+              : ""
           }
           name="service_principal_app_id"
           type="text"
@@ -62,11 +59,9 @@ export const AzureInstallerFormFields: FC<{
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
-            azure_account
-              ? azure_account.service_principal_password
-              : Object.hasOwn(searchParams, "service_principal_password")
-                ? searchParams?.service_principal_password
-                : ""
+            Object.hasOwn(searchParams, "service_principal_password")
+              ? searchParams?.service_principal_password
+              : ""
           }
           name="service_principal_password"
           type="password"
@@ -79,11 +74,9 @@ export const AzureInstallerFormFields: FC<{
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
-            azure_account
-              ? azure_account.subscription_id
-              : Object.hasOwn(searchParams, "subscription_id")
-                ? searchParams?.subscription_id
-                : ""
+            Object.hasOwn(searchParams, "subscription_id")
+              ? searchParams?.subscription_id
+              : ""
           }
           name="subscription_id"
           type="text"
@@ -96,11 +89,9 @@ export const AzureInstallerFormFields: FC<{
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
-            azure_account
-              ? azure_account.subscription_tenant_id
-              : Object.hasOwn(searchParams, "subscription_tenant_id")
-                ? searchParams?.subscription_tenant_id
-                : ""
+            Object.hasOwn(searchParams, "subscription_tenant_id")
+              ? searchParams?.subscription_tenant_id
+              : ""
           }
           name="subscription_tenant_id"
           type="text"

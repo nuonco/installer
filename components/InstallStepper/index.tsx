@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-
-import { Stepper, Step } from "../Stepper";
-import { Typography } from "@material-tailwind/react";
+import { Stepper, Step } from "@material-tailwind/react";
 
 import { NavArrows } from "./NavArrows";
 import { CompanyContent } from "./CompanyContent";
@@ -15,7 +12,6 @@ import { ErrorAlert } from "./ErrorAlert";
 
 const InstallStepper = ({
   app,
-  existingInstall,
   installer,
   searchParams,
   regions,
@@ -23,28 +19,20 @@ const InstallStepper = ({
   getInstall,
   redeployInstall,
 }) => {
-  const [activeStep, setActiveStep] = React.useState(
-    existingInstall ? app.input_config.input_groups.length + 2 : 0,
-  );
+  const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
 
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
-  const router = useRouter();
 
   // track state of install
-  const [install, setInstall] = React.useState(
-    existingInstall
-      ? existingInstall
-      : {
-          id: searchParams.install_id || "",
-          status: "not created",
-          status_description: "install has not been created yet",
-          install_components: [],
-        },
-  );
-
+  const [install, setInstall] = React.useState({
+    id: searchParams.install_id || "",
+    status: "not created",
+    status_description: "install has not been created yet",
+    install_components: [],
+  });
   const [error, setError] = React.useState({
     description: "",
     error: "",
@@ -54,11 +42,6 @@ const InstallStepper = ({
   // create or update install when form is submitted
   const formAction = async (event) => {
     event.preventDefault();
-
-    if (event.key == "Enter") {
-      // this should have been caught by onKeyUp but we include it here also
-      handleNext();
-    }
 
     const formData = new FormData(event.target);
     let installID = "";
@@ -70,8 +53,6 @@ const InstallStepper = ({
         return;
       }
       installID = res.id;
-      // navigate to the sub-route
-      router.push(`/${app.name}/${res.id}`);
     } else {
       // if we've already created the install, redeploy it
       const reproRes = await redeployInstall(install.id, app, formData);
@@ -90,7 +71,6 @@ const InstallStepper = ({
     }
 
     setInstall(res);
-
     setError({
       description: "",
       error: "",
@@ -136,35 +116,14 @@ const InstallStepper = ({
     }
   }, 1000 * 10);
 
-  // TODO: break this out into a testable function
-  const _install_inputs = install.install_inputs || [{ values: {} }];
-  const install_input_values = _install_inputs[0].values;
   const input_groups = app.input_config.input_groups || [];
   const stepContent = input_groups.map((group, idx) => (
-    <GroupContent
-      key={idx}
-      group={group}
-      install_input_values={install_input_values}
-      idx={idx}
-      setActiveStep={() => setActiveStep(idx + 2)}
-      activeStep={activeStep}
-    />
+    <GroupContent key={idx} group={group} idx={idx} />
   ));
 
   const steps = input_groups.map((group, idx) => (
-    <Step
-      className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
-      activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
-      completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
-      key={idx}
-      onClick={() => setActiveStep(idx + 2)}
-    >
+    <Step key={idx} onClick={() => setActiveStep(idx + 2)}>
       {idx + 3}
-      <div className="absolute -bottom-[2rem] w-max text-center">
-        <Typography variant="h6" className="text-black dark:text-gray-100">
-          {group.display_name}
-        </Typography>
-      </div>
     </Step>
   ));
 
@@ -181,75 +140,33 @@ const InstallStepper = ({
         activeStep={activeStep}
         isLastStep={(value) => setIsLastStep(value)}
         isFirstStep={(value) => setIsFirstStep(value)}
-        lineClassName="bg-black dark:bg-white"
-        activeLineClassName="!bg-step-complete-border-color"
       >
-        <Step
-          className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
-          activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
-          completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
-          onClick={() => setActiveStep(0)}
-        >
-          1
-          <div className="absolute -bottom-[2rem] w-max text-center">
-            <Typography variant="h6" className="text-black dark:text-gray-100">
-              Company Info
-            </Typography>
-          </div>
-        </Step>
+        <Step onClick={() => setActiveStep(0)}>1</Step>
 
-        <Step
-          className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
-          activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
-          completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
-          onClick={() => setActiveStep(1)}
-        >
-          2
-          <div className="absolute -bottom-[2rem] w-max text-center">
-            <Typography variant="h6" className="text-black dark:text-gray-100">
-              AWS IAM Role
-            </Typography>
-          </div>
-        </Step>
+        <Step onClick={() => setActiveStep(1)}>2</Step>
 
         {...steps}
 
-        <Step
-          className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
-          activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
-          completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
-          onClick={() => setActiveStep(steps.length + 2)}
-        >
+        <Step onClick={() => setActiveStep(steps.length + 2)}>
           {steps.length + 3}
-
-          <div className="absolute -bottom-[2rem] w-max text-center">
-            <Typography variant="h6" className="text-black dark:text-gray-100">
-              Install Status
-            </Typography>
-          </div>
         </Step>
       </Stepper>
 
-      <form
-        className="mt-10"
-        onSubmit={formAction}
-        onKeyUp={(e) => {
-          e.preventDefault();
-          if (e.key == "Enter") {
-            handleNext();
-          }
-        }}
-      >
+      <NavArrows
+        handlePrev={handlePrev}
+        isFirstStep={isFirstStep}
+        handleNext={handleNext}
+        isLastStep={isLastStep}
+      />
+
+      <form className="mt-4" onSubmit={formAction}>
         <CompanyContent
-          name={install.name}
           open={activeStep === 0}
           onClick={() => setActiveStep(0)}
         />
 
         <CloudAccountContent
           app={app}
-          aws_account={install.aws_account}
-          azure_account={install.aws_account}
           open={activeStep == 1}
           onClick={() => setActiveStep(1)}
           searchParams={searchParams}
@@ -265,15 +182,6 @@ const InstallStepper = ({
           post_install_markdown={installer.metadata.post_install_markdown}
         />
       </form>
-
-      <div className="mt-6">
-        <NavArrows
-          handlePrev={handlePrev}
-          isFirstStep={isFirstStep}
-          handleNext={handleNext}
-          isLastStep={isLastStep}
-        />
-      </div>
 
       {errorAlert}
     </div>

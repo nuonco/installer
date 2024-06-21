@@ -15,8 +15,7 @@ export const InstallStatus: FC<{ install: Record<string, any> }> = ({
     sandboxStatusDescription = lastRun.status_description;
   }
 
-  const install_components = install.install_components || [];
-  const components = install_components.map((component, idx) => {
+  const components = install.install_components.map((component, idx) => {
     let status = "pending";
     let status_description = "waiting to deploy";
     if (component.install_deploys.length > 0) {
@@ -27,7 +26,7 @@ export const InstallStatus: FC<{ install: Record<string, any> }> = ({
     return (
       <div key={idx}>
         <span className="font-medium">
-          <StatusIcon status={status} /> {component.component.name}:
+          <StatusIcon status={sandboxStatus} /> {component.component.name}:
         </span>{" "}
         <span>{status_description}</span>
       </div>

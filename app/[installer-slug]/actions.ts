@@ -31,13 +31,7 @@ export async function getInstall(id: string): Promise<Record<string, any>> {
     },
   });
 
-  // work-around for API bug
-  let json = await res.json();
-  if (Array.isArray(json)) {
-    json = json[0];
-  }
-
-  return json;
+  return res.json();
 }
 
 export async function updateInstall(
@@ -93,49 +87,21 @@ export async function deployComponents(
   return res.json();
 }
 
-export async function updateInputs(
-  id: string,
-  app: Record<string, any>,
-  formData: FormData,
-): Promise<Record<string, any>> {
-  const input = installRequestBody(app, formData);
-
-  const res = await fetch(`${NUON_API_URL}/v1/installs/${id}/inputs`, {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
-      "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
-    },
-    method: "POST",
-    body: JSON.stringify({ inputs: input.inputs }),
-  });
-
-  return res.json();
-}
-
 export async function redeployInstall(
   id: string,
   app: Record<string, any>,
   formData: FormData,
 ) {
-  const reqBody = installRequestBody(app, formData);
-
   const updateRes = await updateInstall(id, app, formData);
   if (updateRes.error) {
-    return updateRes;
-  }
-
-  if (Object.keys(reqBody.inputs).length > 0) {
-    const inputsRes = await updateInputs(id, app, formData);
-    if (inputsRes.error) {
-      return inputsRes;
-    }
+    return updateRes.json();
   }
 
   const reproRes = await reprovisionInstall(id);
   if (reproRes.error) {
-    return reproRes;
+    return reproRes.json();
   }
 
-  return await deployComponents(id);
+  const compRes = await deployComponents(id);
+  return await compRes.json();
 }

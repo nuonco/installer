@@ -3,8 +3,7 @@ import React, { type FC } from "react";
 export const InputFields: FC<{
   group: Record<string, any>;
   searchParams?: Record<string, string>;
-  install_input_values: Object;
-}> = ({ group, searchParams = {}, install_input_values }) => {
+}> = ({ group, searchParams = {} }) => {
   return (
     <fieldset key={group.id} name={group.name} className="p-4 w-full">
       {group.app_inputs.map((input) => (
@@ -15,11 +14,9 @@ export const InputFields: FC<{
           <input
             className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
             defaultValue={
-              Object.keys(install_input_values).includes(input.name)
-                ? install_input_values[input.name]
-                : Object.hasOwn(searchParams, `input:${input.name}`)
-                  ? searchParams?.[`input:${input.name}`]
-                  : input?.default
+              Object.hasOwn(searchParams, `input:${input.name}`)
+                ? searchParams?.[`input:${input.name}`]
+                : input?.default
             }
             name={`input:${input.name}`}
             required={input.required}
