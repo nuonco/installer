@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import React from "react";
-import showdown from "showdown";
 import { getInstaller } from "@/common";
 import { Link, PoweredByNuon } from "@/components";
+import { Markdown } from "@/components/Markdown";
 import "./globals.css";
 
-const markdown = new showdown.Converter();
 const inter = Inter({ subsets: ["latin"] });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -63,11 +62,7 @@ export default async function RootLayout({
           <footer className="flex items-center justify-between">
             <div className="flex gap-2 items-center">
               {metadata.copyright_markdown ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: markdown.makeHtml(metadata.copyright_markdown),
-                  }}
-                />
+                <Markdown content={metadata.copyright_markdown} />
               ) : (
                 <>
                   <span className="text-xs">
@@ -86,11 +81,7 @@ export default async function RootLayout({
             </div>
             <div className="flex gap-6 items-center">
               {metadata.footer_markdown ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: markdown.makeHtml(metadata.footer_markdown),
-                  }}
-                />
+                <Markdown content={metadata.footer_markdown} />
               ) : (
                 <PoweredByNuon />
               )}
