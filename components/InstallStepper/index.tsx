@@ -115,7 +115,7 @@ const InstallStepper = ({
         user_error: false,
       });
     }
-  }, 1000 * 5);
+  }, 1000 * 10);
 
   const input_groups = app.input_config.input_groups || [];
   const stepContent = input_groups.map((group, idx) => (
