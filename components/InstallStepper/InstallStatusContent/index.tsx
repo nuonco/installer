@@ -40,7 +40,9 @@ export const InstallStatusContent = ({
 
         <div>
           <InstallStatus install={install} />
-          <InstallButton install={install} />
+          <div className="mt-4 flex justify-end">
+            <InstallButton install={install} />
+          </div>
         </div>
       </div>
     </AccordionBody>
