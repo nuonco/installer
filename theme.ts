@@ -1,42 +1,19 @@
 const colors = require("tailwindcss/colors");
-import {generateColorRange} from "./common/generateColors";
-
-const primary = generateColorRange("#ef6a3f");
 
 export default {
-    darkMode: "selector",
-    theme: {
-        extend: {
-            colors: {
-                black: colors.black,
-                white: colors.white,
-                primary: primary,
-                "page-background": "#eff5f9",
-                "card-border": "#eee",
-                "card-background": colors.white,
-                "accordion-header-color": colors.black,
-                "accordion-header-background": colors.gray["100"],
-                "button-text-color": colors.gray["50"],
-                "button-border-color": colors.black,
-                "button-bg-color": primary["500"],
-                "button-bg-hover": primary["600"],
-                "button-bg-focus": primary["600"],
-                "button-bg-active": primary["700"],
-            },
-            boxShadow: {
-                "card-shadow":
-                    "none",
-                "button-shadow":
-                    "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-            },
-            borderWidth: {
-                "card-border-width": "1px",
-                "button-border-width": "0px",
-            },
-            borderRadius: {
-                "card-radius": "0.25rem",
-                "button-radius": "0.25rem",
-            },
-        },
+  darkMode: "selector",
+  theme: {
+    extend: {
+      colors: {
+        black: colors.black,
+        white: colors.white,
+        primary: colors.fuchsia,
+        "page-background": colors.white,
+        "card-border": colors.gray["200"],
+        "card-background": colors.white,
+        "accordion-header-color": colors.black,
+        "accordion-header-background": colors.gray["100"],
+      },
     },
+  },
 };

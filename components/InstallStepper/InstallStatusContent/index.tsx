@@ -3,10 +3,12 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
+import showdown from "showdown";
 import { InstallStatus } from "./InstallStatus";
 import { StatusIcon } from "@/components";
 import { InstallButton } from "./InstallButton";
-import { Markdown } from "@/components/Markdown";
+
+const markdown = new showdown.Converter();
 
 export const InstallStatusContent = ({
   open = false,
@@ -29,7 +31,11 @@ export const InstallStatusContent = ({
     <AccordionBody>
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <Markdown content={post_install_markdown} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: markdown.makeHtml(post_install_markdown),
+            }}
+          />
         </div>
 
         <div>
