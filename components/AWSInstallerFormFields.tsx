@@ -1,11 +1,11 @@
 import React, { type FC } from "react";
 import { Select } from "@/components";
-import { getCloudPlatformRegions, getFlagEmoji } from "@/common";
+import { getFlagEmoji } from "@/common";
 
-export const AWSRegionSelect: FC<{ defaultValue?: string }> = async ({
-  defaultValue = "",
-}) => {
-  const regions = await getCloudPlatformRegions("aws");
+export const AWSRegionSelect: FC<{
+  defaultValue?: string;
+  regions: Array<any>;
+}> = ({ defaultValue = "", regions = [] }) => {
   const options = regions.map((o) => ({
     value: o.value,
     label: `${getFlagEmoji(o.icon.substring(5))} ${o.display_name}`,
@@ -23,11 +23,12 @@ export const AWSRegionSelect: FC<{ defaultValue?: string }> = async ({
 
 export const AWSInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
-}> = ({ searchParams = {} }) => {
+  regions: Array<Object>;
+}> = ({ searchParams = {}, regions }) => {
   return (
-    <>
-      <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">AWS IAM role ARN</span>
+    <fieldset className="p-4 w-full">
+      <label className="mb-2 flex flex-col flex-auto gap-2">
+        <span className="text-sm font-medium">AWS IAM role ARN</span>
         <input
           className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
           defaultValue={
@@ -41,14 +42,15 @@ export const AWSInstallerFormFields: FC<{
         />
       </label>
 
-      <label className="flex flex-col flex-auto gap-2">
-        <span className="text-sm font-semibold">AWS Region</span>
+      <label className="mb-2 flex flex-col flex-auto gap-2">
+        <span className="text-sm font-medium">AWS Region</span>
         <AWSRegionSelect
           defaultValue={
             Object.hasOwn(searchParams, "region") ? searchParams?.region : ""
           }
+          regions={regions}
         />
       </label>
-    </>
+    </fieldset>
   );
 };

@@ -1,6 +1,5 @@
 import { getInstaller } from "@/common";
-import { Link, Video } from "@/components";
-import Card from "@/components/Card";
+import { Link, Video, Card } from "@/components";
 
 export default async function Home({ searchParams }) {
   const { metadata, apps } = await getInstaller();
@@ -29,7 +28,7 @@ export default async function Home({ searchParams }) {
         <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6">
           {apps.length &&
             apps.map((app) => (
-              <Card key={app.id}>
+              <Card className="p-6" key={app.id}>
                 <span>
                   <h2 className="text-lg font-semibold mb-2">{app.name}</h2>
                   <p className="text-xs leading-relaxed">{app.description}</p>

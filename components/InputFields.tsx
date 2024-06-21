@@ -1,12 +1,12 @@
 import React, { type FC } from "react";
 
-export const AppInputFields: FC<{
-  inputs: Array<Record<string, any>>;
+export const InputFields: FC<{
+  group: Record<string, any>;
   searchParams?: Record<string, string>;
-}> = ({ inputs, searchParams = {} }) => {
+}> = ({ group, searchParams = {} }) => {
   return (
-    <fieldset className="flex flex-col gap-4 mt-4">
-      {inputs?.map((input) => (
+    <fieldset key={group.id} name={group.name} className="p-4 w-full">
+      {group.app_inputs.map((input) => (
         <label className="mb-2 flex flex-col flex-auto gap-2" key={input?.id}>
           <span className="text-sm font-medium">
             {input?.display_name || input?.name}
