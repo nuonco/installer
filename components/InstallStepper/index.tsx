@@ -1,29 +1,14 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import {
-  Stepper,
-  Step,
-  Button,
-  IconButton,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-  Alert,
-} from "@material-tailwind/react";
-import {
-  AWSInstallerFormFields,
-  InputFields,
-  AzureInstallerFormFields,
-  StepOneAWS,
-  StepOneAzure,
-  StatusIcon,
-  Card,
-} from "@/components";
-import { InstallStatus } from "./InstallStatus";
-import showdown from "showdown";
+import { Stepper, Step } from "@material-tailwind/react";
 
-const markdown = new showdown.Converter();
+import { NavArrows } from "./NavArrows";
+import { CompanyContent } from "./CompanyContent";
+import { CloudAccountContent } from "./CloudAccountContent";
+import { GroupContent } from "./GroupContent";
+import { InstallStatusContent } from "./InstallStatusContent";
+import { ErrorAlert } from "./ErrorAlert";
 
 const InstallStepper = ({
   app,
@@ -134,16 +119,7 @@ const InstallStepper = ({
 
   const input_groups = app.input_config.input_groups || [];
   const stepContent = input_groups.map((group, idx) => (
-    <Accordion key={idx} open={activeStep === idx + 2}>
-      <AccordionHeader onClick={() => setActiveStep(idx + 2)}>
-        {group.display_name}
-      </AccordionHeader>
-      <AccordionBody>
-        <Card>
-          <InputFields group={group} searchParams={searchParams} />
-        </Card>
-      </AccordionBody>
-    </Accordion>
+    <GroupContent group={group} idx={idx} />
   ));
 
   const steps = input_groups.map((group, idx) => (
@@ -153,11 +129,7 @@ const InstallStepper = ({
   ));
 
   const errorAlert =
-    error.error !== "" ? (
-      <div className="fixed w-full right-0 bottom-0 left-0 p-4">
-        <Alert color="red">{error.description}</Alert>
-      </div>
-    ) : null;
+    error.error !== "" ? <ErrorAlert>{error.description}</ErrorAlert> : null;
 
   return (
     <div className="relative w-full p-4">
@@ -177,164 +149,39 @@ const InstallStepper = ({
         </Step>
       </Stepper>
 
-      <div className="absolute -left-8 -right-8 top-1/2 flex justify-between">
-        <IconButton
-          className="rounded-full"
-          onClick={handlePrev}
-          disabled={isFirstStep}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5 8.25 12l7.5-7.5"
-            />
-          </svg>
-        </IconButton>
-        <IconButton
-          className="rounded-full"
-          onClick={handleNext}
-          disabled={isLastStep}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m8.25 4.5 7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </IconButton>
-      </div>
+      <NavArrows
+        handlePrev={handlePrev}
+        isFirstStep={isFirstStep}
+        handleNext={handleNext}
+        isLastStep={isLastStep}
+      />
 
       <form className="mt-4" onSubmit={formAction}>
-        <Accordion open={activeStep === 0}>
-          <AccordionHeader onClick={() => setActiveStep(0)}>
-            Company Info
-          </AccordionHeader>
-          <AccordionBody>
-            <Card>
-              <fieldset className="p-4 w-full">
-                <label className="flex flex-col flex-auto gap-2">
-                  <span className="text-sm font-medium">Name</span>
-                  <input
-                    className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
-                    defaultValue={
-                      Object.hasOwn(searchParams, "name")
-                        ? searchParams?.name
-                        : ""
-                    }
-                    name="name"
-                    type="text"
-                    required
-                  />
-                </label>
-              </fieldset>
-            </Card>
-          </AccordionBody>
-        </Accordion>
+        <CompanyContent
+          open={activeStep === 0}
+          onClick={() => setActiveStep(0)}
+        />
 
-        <Accordion open={activeStep == 1}>
-          {app?.cloud_platform === "aws" && (
-            <>
-              <AccordionHeader onClick={() => setActiveStep(1)}>
-                AWS IAM Role
-              </AccordionHeader>
-              <AccordionBody className="grid grid-cols-2 gap-4">
-                <StepOneAWS app={app} />
-                <Card>
-                  <AWSInstallerFormFields
-                    searchParams={searchParams}
-                    regions={regions}
-                  />
-                </Card>
-              </AccordionBody>
-            </>
-          )}
-
-          {app?.cloud_platform === "azure" && (
-            <>
-              <AccordionHeader onClick={() => setActiveStep(1)}>
-                Azure Account
-              </AccordionHeader>
-              <AccordionBody className="grid grid-cols-2 gap-4">
-                <StepOneAzure />
-                <Card>
-                  <AzureInstallerFormFields
-                    searchParams={searchParams}
-                    regions={regions}
-                  />
-                </Card>
-              </AccordionBody>
-            </>
-          )}
-        </Accordion>
+        <CloudAccountContent
+          app={app}
+          open={activeStep == 1}
+          onClick={() => setActiveStep(1)}
+          searchParams={searchParams}
+          regions={regions}
+        />
 
         {...stepContent}
 
-        <Accordion open={activeStep === steps.length + 2}>
-          <AccordionHeader onClick={() => setActiveStep(steps.length + 2)}>
-            <span>
-              Install Status <StatusIcon status={install.status} />{" "}
-              <span className="text-sm font-medium">
-                {install.status_description}
-              </span>
-            </span>
-          </AccordionHeader>
-          <AccordionBody>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: markdown.makeHtml(
-                      installer?.metadata?.post_install_markdown,
-                    ),
-                  }}
-                />
-              </div>
-
-              <div>
-                <InstallStatus install={install} />
-                <InstallButton install={install} />
-              </div>
-            </div>
-          </AccordionBody>
-        </Accordion>
+        <InstallStatusContent
+          open={activeStep === steps.length + 2}
+          onClick={() => setActiveStep(steps.length + 2)}
+          install={install}
+          post_install_markdown={installer.metadata.post_install_markdown}
+        />
       </form>
 
       {errorAlert}
     </div>
-  );
-};
-
-const InstallButton = ({ install }) => {
-  const loading = install.status === "provisioning";
-
-  let label = "Create Install";
-  if (install.id.length > 0) label = "Update Install";
-  if (loading) label = "Provisioning";
-
-  return (
-    <Button
-      loading={loading}
-      type="submit"
-      className="block mr-0 ml-auto rounded text-sm text-gray-50 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700 active:bg-primary-800 px-4 py-1.5 mt-4"
-    >
-      {label}
-    </Button>
   );
 };
 
