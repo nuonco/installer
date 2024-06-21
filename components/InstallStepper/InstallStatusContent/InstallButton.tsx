@@ -1,6 +1,7 @@
 import { Button } from "@material-tailwind/react";
 
 export const InstallButton = ({ install }) => {
+  install.status = "provisioning";
   const loading = install.status === "provisioning";
 
   let label = "Create Install";
