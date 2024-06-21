@@ -59,8 +59,6 @@ const InstallStepper = ({
   const formAction = async (event) => {
     event.preventDefault();
 
-    console.log("event: ", event);
-
     const formData = new FormData(event.target);
     let installID = "";
     if (install.id === "") {
@@ -133,10 +131,6 @@ const InstallStepper = ({
       });
     }
   }, 1000 * 5);
-
-  console.log("app: ", app);
-  console.log("install: ", install);
-  console.log("error: ", error);
 
   const input_groups = app.input_config.input_groups || [];
   const stepContent = input_groups.map((group, idx) => (
