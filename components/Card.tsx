@@ -1,13 +1,14 @@
-import React from "react";
+import React, { type FC } from "react";
 
-export default function Card({
+export const Card: FC<{ children?: React.ReactNode; className?: string }> = ({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  className = "",
+}) => {
   return (
-    <div className="flex flex-col gap-2 rounded bg-card-background dark:bg-white p-6 items-start rounded border-card-border border-2">
+    <div
+      className={`flex flex-col gap-2 rounded bg-card-background dark:bg-white items-start border border-card-border shadow shadow-card-border ${className}`}
+    >
       {children}
     </div>
   );
-}
+};

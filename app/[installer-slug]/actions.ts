@@ -1,51 +1,13 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { NUON_API_URL } from "@/common";
+import { installRequestBody } from "./util";
 
 export async function createInstall(
   app: Record<string, any>,
   formData: FormData,
 ) {
-  const data = Object.fromEntries(formData);
-  const inputs = Object.keys(data).reduce(
-    (acc: Record<string, unknown>, key) => {
-      if (key.includes("input:")) {
-        acc[key.replace("input:", "")] = data[key];
-      }
-
-      return acc;
-    },
-    {},
-  );
-
-  let input: Record<string, unknown> = {
-    inputs,
-    name: data?.name,
-  };
-
-  if (app?.cloud_platform === "azure") {
-    input = {
-      azure_account: {
-        location: data?.location,
-        service_principal_app_id: data?.service_principal_app_id,
-        service_principal_password: data?.service_principal_password,
-        subscription_id: data?.subscription_id,
-        subscription_tenant_id: data?.subscription_tenant_id,
-      },
-      ...input,
-    };
-  }
-
-  if (app?.cloud_platform === "aws") {
-    input = {
-      aws_account: {
-        iam_role_arn: data?.iam_role_arn,
-        region: data?.region,
-      },
-      ...input,
-    };
-  }
+  const input = installRequestBody(app, formData);
 
   const res = await fetch(`${NUON_API_URL}/v1/apps/${app?.id}/installs`, {
     body: JSON.stringify(input),
@@ -57,7 +19,89 @@ export async function createInstall(
     method: "POST",
   });
 
-  const install = await res.json();
+  return await res.json();
+}
 
-  redirect(`/${app?.name}/${install?.id}`);
+export async function getInstall(id: string): Promise<Record<string, any>> {
+  const res = await fetch(`${NUON_API_URL}/v1/installs/${id}`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
+      "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
+    },
+  });
+
+  return res.json();
+}
+
+export async function updateInstall(
+  id: string,
+  app: Record<string, any>,
+  formData: FormData,
+) {
+  const input = installRequestBody(app, formData);
+
+  const res = await fetch(`${NUON_API_URL}/v1/installs/${id}`, {
+    body: JSON.stringify(input),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
+      "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
+    },
+    method: "PATCH",
+  });
+
+  return await res.json();
+}
+
+export async function reprovisionInstall(
+  id: string,
+): Promise<Record<string, any>> {
+  const res = await fetch(`${NUON_API_URL}/v1/installs/${id}/reprovision`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
+      "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
+    },
+    method: "POST",
+  });
+
+  return res.json();
+}
+
+export async function deployComponents(
+  id: string,
+): Promise<Record<string, any>> {
+  const res = await fetch(
+    `${NUON_API_URL}/v1/installs/${id}/components/deploy-all`,
+    {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
+        "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
+      },
+      method: "POST",
+    },
+  );
+
+  return res.json();
+}
+
+export async function redeployInstall(
+  id: string,
+  app: Record<string, any>,
+  formData: FormData,
+) {
+  const updateRes = await updateInstall(id, app, formData);
+  if (updateRes.error) {
+    return updateRes.json();
+  }
+
+  const reproRes = await reprovisionInstall(id);
+  if (reproRes.error) {
+    return reproRes.json();
+  }
+
+  const compRes = await deployComponents(id);
+  return await compRes.json();
 }

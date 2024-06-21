@@ -13,11 +13,6 @@ export async function getInstaller(): Promise<Record<string, any>> {
     },
   );
 
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch installers");
-  }
-
   return res.json();
 }
 
@@ -29,11 +24,6 @@ export async function getAppBySlug(slug: string): Promise<Record<string, any>> {
       "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
     },
   });
-
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch app");
-  }
 
   return res.json();
 }
@@ -47,16 +37,13 @@ export async function getInstall(id: string): Promise<Record<string, any>> {
     },
   });
 
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch install");
-  }
-
   return res.json();
 }
 
-export async function getCloudPlatformRegions(platform: string): Promise<Array<Record<string, any>>> {
-    const res = await fetch(
+export async function getCloudPlatformRegions(
+  platform: string,
+): Promise<Array<Record<string, any>>> {
+  const res = await fetch(
     `${NUON_API_URL}/v1/general/cloud-platform/${platform}/regions`,
     {
       cache: "no-store",
@@ -67,18 +54,13 @@ export async function getCloudPlatformRegions(platform: string): Promise<Array<R
     },
   );
 
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch regions");
-  }
-
   return res.json();
 }
 
-export function getFlagEmoji(countryCode = 'us') {
+export function getFlagEmoji(countryCode = "us") {
   const codePoints = countryCode
     .toUpperCase()
-    .split('')
-    .map((char) => 127397 + char.charCodeAt(0))
-  return String.fromCodePoint(...codePoints)
+    .split("")
+    .map((char) => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
 }
