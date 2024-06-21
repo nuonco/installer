@@ -8,7 +8,7 @@ import { Card } from "@/components";
 export const CompanyContent = ({
   open = false,
   onClick = () => {},
-  searchParams = {},
+  searchParams = { name: "" },
 }) => (
   <Accordion open={open}>
     <AccordionHeader onClick={onClick}>Company Info</AccordionHeader>
@@ -20,7 +20,7 @@ export const CompanyContent = ({
             <input
               className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
               defaultValue={
-                Object.hasOwn(searchParams, "name") ? searchParams?.name : ""
+                Object.hasOwn(searchParams, "name") ? searchParams.name : ""
               }
               name="name"
               type="text"

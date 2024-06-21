@@ -4,7 +4,7 @@ export const NavArrows = ({
   handlePrev = () => {},
   isFirstStep = false,
   handleNext = () => {},
-  isLastStep = () => {},
+  isLastStep = false,
 }) => (
   <div className="absolute -left-8 -right-8 top-1/2 flex justify-between">
     <IconButton

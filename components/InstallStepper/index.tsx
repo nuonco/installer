@@ -37,7 +37,6 @@ const InstallStepper = ({
     description: "",
     error: "",
     user_error: false,
-    install_components: [],
   });
 
   // create or update install when form is submitted
