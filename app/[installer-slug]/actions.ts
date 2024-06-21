@@ -31,11 +31,6 @@ export async function getInstall(id: string): Promise<Record<string, any>> {
     },
   });
 
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch install");
-  }
-
   return res.json();
 }
 
@@ -71,11 +66,6 @@ export async function reprovisionInstall(
     method: "POST",
   });
 
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch install");
-  }
-
   return res.json();
 }
 
@@ -93,11 +83,6 @@ export async function deployComponents(
       method: "POST",
     },
   );
-
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch install");
-  }
 
   return res.json();
 }

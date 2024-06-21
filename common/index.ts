@@ -13,11 +13,6 @@ export async function getInstaller(): Promise<Record<string, any>> {
     },
   );
 
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch installers");
-  }
-
   return res.json();
 }
 
@@ -30,11 +25,6 @@ export async function getAppBySlug(slug: string): Promise<Record<string, any>> {
     },
   });
 
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch app");
-  }
-
   return res.json();
 }
 
@@ -46,11 +36,6 @@ export async function getInstall(id: string): Promise<Record<string, any>> {
       "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
     },
   });
-
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch install");
-  }
 
   return res.json();
 }
@@ -68,11 +53,6 @@ export async function getCloudPlatformRegions(
       },
     },
   );
-
-  if (!res.ok) {
-    console.debug(await res.json());
-    throw new Error("Can't fetch regions");
-  }
 
   return res.json();
 }

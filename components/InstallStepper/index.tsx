@@ -52,6 +52,7 @@ const InstallStepper = ({
     description: "",
     error: "",
     user_error: false,
+    install_components: [],
   });
 
   // create or update install when form is submitted
@@ -119,7 +120,17 @@ const InstallStepper = ({
   useInterval(async () => {
     if (install.id !== "") {
       const res = await getInstall(install.id);
+      if (res.error) {
+        setError(res);
+        return;
+      }
+
       setInstall(res);
+      setError({
+        description: "",
+        error: "",
+        user_error: false,
+      });
     }
   }, 1000 * 5);
 

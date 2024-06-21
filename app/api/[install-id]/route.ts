@@ -10,9 +10,5 @@ export const GET = async (req: NextRequest) => {
     },
   });
 
-  if (!res?.ok) {
-    throw new Error(`Can't find install ${installId}`);
-  }
-
   return NextResponse.json(await res.json());
 };
