@@ -2,8 +2,8 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Card,
 } from "@material-tailwind/react";
+import { Card } from "@/components";
 
 export const CompanyContent = ({
   open = false,
