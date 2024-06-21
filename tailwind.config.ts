@@ -17,5 +17,6 @@ const config: Config = {
   ],
   darkMode: theme.darkMode as Config["darkMode"],
   theme: theme.theme,
+  plugins: [require("@tailwindcss/typography")],
 };
 export default withMT(config);
