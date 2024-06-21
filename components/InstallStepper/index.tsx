@@ -128,8 +128,12 @@ const InstallStepper = ({
     </Step>
   ));
 
-  const errorAlert =
-    error.error !== "" ? <ErrorAlert>{error.description}</ErrorAlert> : null;
+  let errorAlert = null;
+  if (error.description) {
+    errorAlert = (
+      <ErrorAlert setError={setError}>{error.description}</ErrorAlert>
+    );
+  }
 
   return (
     <div className="relative w-full p-4">
