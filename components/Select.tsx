@@ -10,6 +10,11 @@ interface Option {
   isSelected?: boolean;
 }
 
+const classNames = {
+  listItem: ({ isSelected }) =>
+    `block transition duration-200 px-2 py-2 cursor-pointer select-none truncate rounded ${isSelected ? `text-white bg-primary-500` : `text-gray-500 hover:bg-primary-200 hover:text-primary-600`}`,
+};
+
 export const Select: FC<{
   defaultValue?: string;
   name: string;
@@ -34,7 +39,7 @@ export const Select: FC<{
           setValue(e as any);
         }}
         options={options as any}
-        primaryColor={"primary"}
+        classNames={classNames}
       />
     </>
   );
