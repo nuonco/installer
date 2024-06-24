@@ -49,6 +49,8 @@ export const Select: FC<{
           setValue(e as any);
         }}
         options={options as any}
+        /* we're not using primaryColor, but if it's not set the build fails due to TS errors */
+        primaryColor="blue"
         classNames={classNames}
       />
     </>
