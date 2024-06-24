@@ -19,8 +19,8 @@ export default async function Installer({ params, searchParams }) {
   return (
     <>
       <header className="flex flex-col gap-4">
-        <div className="flex justify-between pt-4">
-          <Link className="w-fit pt-4" href="/">
+        <div className="flex justify-between items-center pt-4">
+          <Link className="w-fit" href="/">
             {"< Other installation options"}
           </Link>
           <Link href={installer?.metadata?.homepage_url}>
