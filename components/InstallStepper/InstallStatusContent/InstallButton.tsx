@@ -11,7 +11,7 @@ export const InstallButton = ({ install }) => {
     <Button
       loading={loading}
       type="submit"
-      className="rounded text-sm text-gray-50 bg-primary-500 hover:bg-primary-600 focus:bg-primary-600 active:bg-primary-700 px-4 py-1.5"
+      className="text-sm text-button-text-color bg-button-bg-color hover:bg-button-bg-hover focus:bg-button-bg-focus active:bg-button-bg-active shadow-button-shadow !border-button-border-color border-button-border-width rounded-button-radius px-4 py-1.5"
     >
       {label}
     </Button>
