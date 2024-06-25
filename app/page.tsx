@@ -9,16 +9,20 @@ export default async function Home({ searchParams }) {
 
   return (
     <>
-      <header className="flex flex-auto flex-col gap-12 md:gap-24">
-        <div className="flex flex-col gap-4">
+      <header className="flex flex-auto flex-col gap-6 md:gap-12">
+        <div className="text-center">
           <h1>
             <Link href={metadata.homepage_url}>
-              <img src={metadata.logo_url} alt={metadata.name} />
+              <img
+                className="inline-block max-w-xl max-h-xl"
+                src={metadata.logo_url}
+                alt={metadata.name}
+              />
             </Link>
           </h1>
         </div>
 
-        <p className="text-4xl text-center leading-relaxed">
+        <p className="text-xl md:text-4xl text-center leading-relaxed">
           {metadata.description}
         </p>
 
