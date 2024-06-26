@@ -31,7 +31,13 @@ export async function getInstall(id: string): Promise<Record<string, any>> {
     },
   });
 
-  return res.json();
+  // work-around for API bug
+  let json = await res.json();
+  if (Array.isArray(json)) {
+    json = json[0];
+  }
+
+  return json;
 }
 
 export async function updateInstall(
@@ -94,14 +100,13 @@ export async function redeployInstall(
 ) {
   const updateRes = await updateInstall(id, app, formData);
   if (updateRes.error) {
-    return updateRes.json();
+    return updateRes;
   }
 
   const reproRes = await reprovisionInstall(id);
   if (reproRes.error) {
-    return reproRes.json();
+    return reproRes;
   }
 
-  const compRes = await deployComponents(id);
-  return await compRes.json();
+  return await deployComponents(id);
 }
