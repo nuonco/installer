@@ -26,7 +26,7 @@ export const InstallStatus: FC<{ install: Record<string, any> }> = ({
     return (
       <div key={idx}>
         <span className="font-medium">
-          <StatusIcon status={sandboxStatus} /> {component.component.name}:
+          <StatusIcon status={status} /> {component.component.name}:
         </span>{" "}
         <span>{status_description}</span>
       </div>
