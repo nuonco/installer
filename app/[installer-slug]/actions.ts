@@ -93,6 +93,26 @@ export async function deployComponents(
   return res.json();
 }
 
+export async function updateInputs(
+  id: string,
+  app: Record<string, any>,
+  formData: FormData,
+): Promise<Record<string, any>> {
+  const input = installRequestBody(app, formData);
+
+  const res = await fetch(`${NUON_API_URL}/v1/installs/${id}/inputs`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
+      "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
+    },
+    method: "POST",
+    body: JSON.stringify({ inputs: input.inputs }),
+  });
+
+  return res.json();
+}
+
 export async function redeployInstall(
   id: string,
   app: Record<string, any>,
@@ -101,6 +121,11 @@ export async function redeployInstall(
   const updateRes = await updateInstall(id, app, formData);
   if (updateRes.error) {
     return updateRes;
+  }
+
+  const inputsRes = await updateInputs(id, app, formData);
+  if (inputsRes.error) {
+    return inputsRes;
   }
 
   const reproRes = await reprovisionInstall(id);
