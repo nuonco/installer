@@ -118,7 +118,13 @@ const InstallStepper = ({
 
   const input_groups = app.input_config.input_groups || [];
   const stepContent = input_groups.map((group, idx) => (
-    <GroupContent key={idx} group={group} idx={idx} />
+    <GroupContent
+      key={idx}
+      group={group}
+      idx={idx}
+      setActiveStep={() => setActiveStep(idx + 2)}
+      activeStep={activeStep}
+    />
   ));
 
   const steps = input_groups.map((group, idx) => (
