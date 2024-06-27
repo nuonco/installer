@@ -118,14 +118,18 @@ export async function redeployInstall(
   app: Record<string, any>,
   formData: FormData,
 ) {
+  const reqBody = installRequestBody(app, formData);
+
   const updateRes = await updateInstall(id, app, formData);
   if (updateRes.error) {
     return updateRes;
   }
 
-  const inputsRes = await updateInputs(id, app, formData);
-  if (inputsRes.error) {
-    return inputsRes;
+  if (reqBody.inputs.length > 0) {
+    const inputsRes = await updateInputs(id, app, formData);
+    if (inputsRes.error) {
+      return inputsRes;
+    }
   }
 
   const reproRes = await reprovisionInstall(id);
