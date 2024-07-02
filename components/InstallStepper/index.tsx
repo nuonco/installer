@@ -207,13 +207,6 @@ const InstallStepper = ({
         </Step>
       </Stepper>
 
-      <NavArrows
-        handlePrev={handlePrev}
-        isFirstStep={isFirstStep}
-        handleNext={handleNext}
-        isLastStep={isLastStep}
-      />
-
       <form className="mt-4" onSubmit={formAction}>
         <CompanyContent
           open={activeStep === 0}
@@ -237,6 +230,15 @@ const InstallStepper = ({
           post_install_markdown={installer.metadata.post_install_markdown}
         />
       </form>
+
+      <div className="mt-6">
+        <NavArrows
+          handlePrev={handlePrev}
+          isFirstStep={isFirstStep}
+          handleNext={handleNext}
+          isLastStep={isLastStep}
+        />
+      </div>
 
       {errorAlert}
     </div>
