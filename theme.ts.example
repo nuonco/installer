@@ -17,6 +17,8 @@ export default {
         "card-background": "rgb(255 255 255 / 5%)",
         "accordion-header-color": colors.black,
         "accordion-header-background": primary["500"],
+        "accordion-header-active-color": colors.black,
+        "accordion-header-active-background": colors.blue["100"],
         "button-text-color": colors.gray["50"],
         "button-border-color": colors.black,
         "button-bg-color": primary["500"],

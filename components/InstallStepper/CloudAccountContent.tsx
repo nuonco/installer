@@ -18,7 +18,11 @@ export const CloudAccountContent = ({
     {app.cloud_platform === "aws" && (
       <>
         <AccordionHeader
-          className="text-black dark:text-white hover:!text-gray-500"
+          className={
+            open
+              ? "px-4 bg-accordion-header-active-background text-accordion-header-active-color"
+              : "px-4"
+          }
           onClick={onClick}
         >
           AWS IAM Role

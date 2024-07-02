@@ -15,7 +15,11 @@ export const InstallStatusContent = ({
 }) => (
   <Accordion open={open}>
     <AccordionHeader
-      className="text-black dark:text-white hover:!text-gray-500"
+      className={
+        open
+          ? "px-4 bg-accordion-header-active-background text-accordion-header-active-color"
+          : "px-4"
+      }
       onClick={onClick}
     >
       <span>

@@ -8,8 +8,12 @@ export const CompanyContent = ({
 }) => (
   <Accordion open={open}>
     <AccordionHeader
-      className="text-black dark:text-white hover:!text-gray-500"
       onClick={onClick}
+      className={
+        open
+          ? "px-4 bg-accordion-header-active-background text-accordion-header-active-color"
+          : "px-4"
+      }
     >
       Company Info
     </AccordionHeader>
