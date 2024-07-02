@@ -37,6 +37,7 @@ export default {
       borderRadius: {
         "card-radius": "0.25rem",
         "button-radius": "0.25rem",
+        "video-container-radius": "0.5rem",
       },
     },
   },
