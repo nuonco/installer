@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { Stepper, Step } from "../Stepper";
+import { Typography } from "@material-tailwind/react";
 
 import { NavArrows } from "./NavArrows";
 import { CompanyContent } from "./CompanyContent";
@@ -130,12 +131,17 @@ const InstallStepper = ({
   const steps = input_groups.map((group, idx) => (
     <Step
       className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
-      activeClassName="!bg-primary-500"
-      completedClassName="!bg-primary-500"
+      activeClassName="!bg-primary-500 border-4 border-step-active-border-color"
+      completedClassName="!bg-primary-500 border-4 border-gray-900"
       key={idx}
       onClick={() => setActiveStep(idx + 2)}
     >
       {idx + 3}
+      <div className="absolute -bottom-[2rem] w-max text-center">
+        <Typography variant="h6" className="text-black">
+          {group.display_name}
+        </Typography>
+      </div>
     </Step>
   ));
 
@@ -157,31 +163,47 @@ const InstallStepper = ({
       >
         <Step
           className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
-          activeClassName="!bg-primary-500"
-          completedClassName="!bg-primary-500"
+          completedClassName="border-4 border-gray-900 !bg-primary-500"
+          activeClassName="border-4 border-step-active-border-color !bg-primary-500"
           onClick={() => setActiveStep(0)}
         >
           1
+          <div className="absolute -bottom-[2rem] w-max text-center">
+            <Typography variant="h6" className="text-black">
+              Company Info
+            </Typography>
+          </div>
         </Step>
 
         <Step
           className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
-          activeClassName="!bg-primary-500"
-          completedClassName="!bg-primary-500"
+          completedClassName="border-4 border-gray-900 !bg-primary-500"
+          activeClassName="border-4 border-step-active-border-color !bg-primary-500"
           onClick={() => setActiveStep(1)}
         >
           2
+          <div className="absolute -bottom-[2rem] w-max text-center">
+            <Typography variant="h6" className="text-black">
+              AWS IAM Role
+            </Typography>
+          </div>
         </Step>
 
         {...steps}
 
         <Step
           className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
-          activeClassName="!bg-primary-500"
-          completedClassName="!bg-primary-500"
+          completedClassName="border-4 border-gray-900 !bg-primary-500"
+          activeClassName="border-4 border-step-active-border-color !bg-primary-500"
           onClick={() => setActiveStep(steps.length + 2)}
         >
           {steps.length + 3}
+
+          <div className="absolute -bottom-[2rem] w-max text-center">
+            <Typography variant="h6" className="text-black">
+              Install Status
+            </Typography>
+          </div>
         </Step>
       </Stepper>
 
