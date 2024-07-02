@@ -19,6 +19,7 @@ export default {
         "accordion-header-background": primary["500"],
         "accordion-header-active-color": colors.black,
         "accordion-header-active-background": colors.blue["100"],
+        "step-active-border-color": colors.green["500"],
         "button-text-color": colors.gray["50"],
         "button-border-color": colors.black,
         "button-bg-color": primary["500"],

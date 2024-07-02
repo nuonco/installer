@@ -129,7 +129,7 @@ const InstallStepper = ({
 
   const steps = input_groups.map((group, idx) => (
     <Step
-      className="bg-black text-white dark:bg-white dark:text-black"
+      className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
       activeClassName="!bg-primary-500"
       completedClassName="!bg-primary-500"
       key={idx}
@@ -156,7 +156,7 @@ const InstallStepper = ({
         activeLineClassName="!bg-primary-500"
       >
         <Step
-          className="bg-black text-white dark:bg-white dark:text-black"
+          className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
           activeClassName="!bg-primary-500"
           completedClassName="!bg-primary-500"
           onClick={() => setActiveStep(0)}
@@ -165,7 +165,7 @@ const InstallStepper = ({
         </Step>
 
         <Step
-          className="bg-black text-white dark:bg-white dark:text-black"
+          className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
           activeClassName="!bg-primary-500"
           completedClassName="!bg-primary-500"
           onClick={() => setActiveStep(1)}
@@ -176,7 +176,7 @@ const InstallStepper = ({
         {...steps}
 
         <Step
-          className="bg-black text-white dark:bg-white dark:text-black"
+          className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
           activeClassName="!bg-primary-500"
           completedClassName="!bg-primary-500"
           onClick={() => setActiveStep(steps.length + 2)}
