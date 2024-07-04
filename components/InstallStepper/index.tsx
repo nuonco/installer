@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { Stepper, Step } from "@material-tailwind/react";
+import { Stepper, Step } from "../Stepper";
 
 import { NavArrows } from "./NavArrows";
 import { CompanyContent } from "./CompanyContent";
@@ -128,7 +128,13 @@ const InstallStepper = ({
   ));
 
   const steps = input_groups.map((group, idx) => (
-    <Step key={idx} onClick={() => setActiveStep(idx + 2)}>
+    <Step
+      className="bg-black text-white dark:bg-white dark:text-black"
+      activeClassName="!bg-primary-500"
+      completedClassName="!bg-primary-500"
+      key={idx}
+      onClick={() => setActiveStep(idx + 2)}
+    >
       {idx + 3}
     </Step>
   ));
@@ -146,14 +152,35 @@ const InstallStepper = ({
         activeStep={activeStep}
         isLastStep={(value) => setIsLastStep(value)}
         isFirstStep={(value) => setIsFirstStep(value)}
+        lineClassName="bg-black dark:bg-white"
+        activeLineClassName="!bg-primary-500"
       >
-        <Step onClick={() => setActiveStep(0)}>1</Step>
+        <Step
+          className="bg-black text-white dark:bg-white dark:text-black"
+          activeClassName="!bg-primary-500"
+          completedClassName="!bg-primary-500"
+          onClick={() => setActiveStep(0)}
+        >
+          1
+        </Step>
 
-        <Step onClick={() => setActiveStep(1)}>2</Step>
+        <Step
+          className="bg-black text-white dark:bg-white dark:text-black"
+          activeClassName="!bg-primary-500"
+          completedClassName="!bg-primary-500"
+          onClick={() => setActiveStep(1)}
+        >
+          2
+        </Step>
 
         {...steps}
 
-        <Step onClick={() => setActiveStep(steps.length + 2)}>
+        <Step
+          className="bg-black text-white dark:bg-white dark:text-black"
+          activeClassName="!bg-primary-500"
+          completedClassName="!bg-primary-500"
+          onClick={() => setActiveStep(steps.length + 2)}
+        >
           {steps.length + 3}
         </Step>
       </Stepper>

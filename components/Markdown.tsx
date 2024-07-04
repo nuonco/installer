@@ -3,7 +3,7 @@ const markdown = new showdown.Converter();
 
 export const Markdown = ({ content = "" }) => (
   <div
-    className="prose"
+    className="prose dark:prose-invert"
     dangerouslySetInnerHTML={{
       __html: markdown.makeHtml(content),
     }}
