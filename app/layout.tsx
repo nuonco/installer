@@ -5,6 +5,7 @@ import { getInstaller } from "@/common";
 import { Link, PoweredByNuon } from "@/components";
 import { Markdown } from "@/components/Markdown";
 import "./globals.css";
+import theme from "@/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,7 +54,7 @@ export default async function RootLayout({
 
   return (
     <html
-      className="bg-page-background text-black dark:bg-black dark:text-white"
+      className={`${theme.forceDarkMode ? "dark" : ""} bg-white dark:bg-black text-black dark:text-white`}
       lang="en"
     >
       <body className={`${inter.className} w-full h-dvh`}>

@@ -1,8 +1,4 @@
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+import { Accordion, AccordionHeader, AccordionBody } from "../Accordion";
 import { Card } from "@/components";
 
 export const CompanyContent = ({
@@ -11,8 +7,13 @@ export const CompanyContent = ({
   searchParams = { name: "" },
 }) => (
   <Accordion open={open}>
-    <AccordionHeader onClick={onClick}>Company Info</AccordionHeader>
-    <AccordionBody>
+    <AccordionHeader
+      className="text-black dark:text-white hover:!text-gray-500"
+      onClick={onClick}
+    >
+      Company Info
+    </AccordionHeader>
+    <AccordionBody className="text-black dark:text-white">
       <Card>
         <fieldset className="p-4 w-full">
           <label className="flex flex-col flex-auto gap-2">
