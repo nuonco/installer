@@ -8,7 +8,7 @@ export const NavArrows = ({
 }) => (
   <div className="absolute -left-8 -right-8 top-1/2 flex justify-between">
     <IconButton
-      className="rounded-full"
+      className="rounded-full bg-black dark:bg-white text-white dark:text-black"
       onClick={handlePrev}
       disabled={isFirstStep}
     >
@@ -28,7 +28,7 @@ export const NavArrows = ({
       </svg>
     </IconButton>
     <IconButton
-      className="rounded-full"
+      className="rounded-full bg-black dark:bg-white text-white dark:text-black"
       onClick={handleNext}
       disabled={isLastStep}
     >

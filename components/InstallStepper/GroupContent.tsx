@@ -1,8 +1,4 @@
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+import { Accordion, AccordionHeader, AccordionBody } from "../Accordion";
 import { InputFields, Card } from "@/components";
 
 export const GroupContent = ({
@@ -13,7 +9,10 @@ export const GroupContent = ({
   searchParams = {},
 }) => (
   <Accordion key={idx} open={activeStep === idx + 2}>
-    <AccordionHeader onClick={() => setActiveStep(idx + 2)}>
+    <AccordionHeader
+      className="text-black dark:text-white hover:!text-gray-500"
+      onClick={() => setActiveStep(idx + 2)}
+    >
       {group.display_name}
     </AccordionHeader>
     <AccordionBody>

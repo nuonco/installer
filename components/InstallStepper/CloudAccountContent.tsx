@@ -1,8 +1,4 @@
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+import { Accordion, AccordionHeader, AccordionBody } from "../Accordion";
 import {
   AWSInstallerFormFields,
   AzureInstallerFormFields,
@@ -21,7 +17,12 @@ export const CloudAccountContent = ({
   <Accordion open={open}>
     {app.cloud_platform === "aws" && (
       <>
-        <AccordionHeader onClick={onClick}>AWS IAM Role</AccordionHeader>
+        <AccordionHeader
+          className="text-black dark:text-white hover:!text-gray-500"
+          onClick={onClick}
+        >
+          AWS IAM Role
+        </AccordionHeader>
         <AccordionBody className="grid grid-cols-2 gap-4">
           <StepOneAWS app={app} />
           <Card>

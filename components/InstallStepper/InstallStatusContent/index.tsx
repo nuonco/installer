@@ -1,8 +1,4 @@
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+import { Accordion, AccordionHeader, AccordionBody } from "../../Accordion";
 import { InstallStatus } from "./InstallStatus";
 import { StatusIcon } from "@/components";
 import { InstallButton } from "./InstallButton";
@@ -18,7 +14,10 @@ export const InstallStatusContent = ({
   post_install_markdown = "",
 }) => (
   <Accordion open={open}>
-    <AccordionHeader onClick={onClick}>
+    <AccordionHeader
+      className="text-black dark:text-white hover:!text-gray-500"
+      onClick={onClick}
+    >
       <span>
         Install Status <StatusIcon status={install.status} />{" "}
         <span className="text-sm font-medium">
