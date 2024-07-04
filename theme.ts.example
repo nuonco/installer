@@ -5,17 +5,18 @@ const primary = generateColorRange("#4E17FF");
 
 export default {
   darkMode: "selector",
+  forceDarkMode: true,
   theme: {
     extend: {
       colors: {
         black: colors.black,
         white: colors.white,
         primary: primary,
-        "page-background": colors.white,
+        "card-text-color": colors.white,
         "card-border-color": colors.black,
-        "card-background": colors.white,
+        "card-background": "rgb(255 255 255 / 5%)",
         "accordion-header-color": colors.black,
-        "accordion-header-background": colors.gray["100"],
+        "accordion-header-background": primary["500"],
         "button-text-color": colors.gray["50"],
         "button-border-color": colors.black,
         "button-bg-color": primary["500"],
