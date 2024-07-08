@@ -177,7 +177,7 @@ const InstallStepper = ({
         isLastStep={(value) => setIsLastStep(value)}
         isFirstStep={(value) => setIsFirstStep(value)}
         lineClassName="bg-black dark:bg-white"
-        activeLineClassName="!bg-primary-500"
+        activeLineClassName="!bg-step-complete-border-color"
       >
         <Step
           className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
