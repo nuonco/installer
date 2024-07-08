@@ -130,15 +130,15 @@ const InstallStepper = ({
 
   const steps = input_groups.map((group, idx) => (
     <Step
-      className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
-      activeClassName="!bg-primary-500 border-4 border-step-active-border-color"
-      completedClassName="!bg-primary-500 border-4 border-gray-900"
+      className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
+      activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
+      completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
       key={idx}
       onClick={() => setActiveStep(idx + 2)}
     >
       {idx + 3}
       <div className="absolute -bottom-[2rem] w-max text-center">
-        <Typography variant="h6" className="text-black">
+        <Typography variant="h6" className="text-black dark:text-gray-100">
           {group.display_name}
         </Typography>
       </div>
@@ -162,28 +162,28 @@ const InstallStepper = ({
         activeLineClassName="!bg-primary-500"
       >
         <Step
-          className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
-          completedClassName="border-4 border-gray-900 !bg-primary-500"
-          activeClassName="border-4 border-step-active-border-color !bg-primary-500"
+          className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
+          activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
+          completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
           onClick={() => setActiveStep(0)}
         >
           1
           <div className="absolute -bottom-[2rem] w-max text-center">
-            <Typography variant="h6" className="text-black">
+            <Typography variant="h6" className="text-black dark:text-gray-100">
               Company Info
             </Typography>
           </div>
         </Step>
 
         <Step
-          className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
-          completedClassName="border-4 border-gray-900 !bg-primary-500"
-          activeClassName="border-4 border-step-active-border-color !bg-primary-500"
+          className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
+          activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
+          completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
           onClick={() => setActiveStep(1)}
         >
           2
           <div className="absolute -bottom-[2rem] w-max text-center">
-            <Typography variant="h6" className="text-black">
+            <Typography variant="h6" className="text-black dark:text-gray-100">
               AWS IAM Role
             </Typography>
           </div>
@@ -192,22 +192,22 @@ const InstallStepper = ({
         {...steps}
 
         <Step
-          className="border-4 border-step-active-border-color bg-black text-white dark:bg-white dark:text-black"
-          completedClassName="border-4 border-gray-900 !bg-primary-500"
-          activeClassName="border-4 border-step-active-border-color !bg-primary-500"
+          className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
+          activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
+          completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
           onClick={() => setActiveStep(steps.length + 2)}
         >
           {steps.length + 3}
 
           <div className="absolute -bottom-[2rem] w-max text-center">
-            <Typography variant="h6" className="text-black">
+            <Typography variant="h6" className="text-black dark:text-gray-100">
               Install Status
             </Typography>
           </div>
         </Step>
       </Stepper>
 
-      <form className="mt-4" onSubmit={formAction}>
+      <form className="mt-10" onSubmit={formAction}>
         <CompanyContent
           open={activeStep === 0}
           onClick={() => setActiveStep(0)}

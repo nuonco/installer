@@ -11,7 +11,12 @@ export const CompanyContent = ({
       onClick={onClick}
       className={
         open
-          ? "px-4 bg-accordion-header-active-background text-accordion-header-active-color"
+          ? `px-4
+          text-accordion-header-active-color
+          dark:text-accordion-header-active-color-dark
+          hover:!text-gray-500
+          bg-accordion-header-active-background
+          dark:bg-accordion-header-active-background-dark`
           : "px-4"
       }
     >
