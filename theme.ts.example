@@ -4,7 +4,7 @@ import { generateColorRange } from "./common/generateColors";
 const primary = generateColorRange("#4E17FF");
 
 export default {
-  darkMode: "selector",
+  darkMode: ["media", ["@media (prefers-color-scheme: dark)", "&:is(.dark *)"]],
   forceDarkMode: true,
   theme: {
     extend: {
@@ -17,6 +17,12 @@ export default {
         "card-background": "rgb(255 255 255 / 5%)",
         "accordion-header-color": colors.black,
         "accordion-header-background": primary["500"],
+        "accordion-header-active-color": colors.black,
+        "accordion-header-active-color-dark": colors.gray["100"],
+        "accordion-header-active-background": colors.blue["100"],
+        "accordion-header-active-background-dark": colors.blue["900"],
+        "step-active-border-color": colors.orange["400"],
+        "step-complete-border-color": colors.green["500"],
         "button-text-color": colors.gray["50"],
         "button-border-color": colors.black,
         "button-bg-color": primary["500"],
@@ -37,6 +43,7 @@ export default {
       borderRadius: {
         "card-radius": "0.25rem",
         "button-radius": "0.25rem",
+        "video-container-radius": "0.5rem",
       },
     },
   },

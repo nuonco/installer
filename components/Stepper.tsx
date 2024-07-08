@@ -14,14 +14,6 @@ export const Stepper = ({ children, ...props }) => {
 };
 
 export const Step = ({ children, ...props }) => {
-  return (
-    <MTStep
-      className="bg-black text-white dark:bg-white dark:text-black"
-      activeClassName="!bg-primary-500"
-      completedClassName="!bg-primary-500"
-      {...props}
-    >
-      {children}
-    </MTStep>
-  );
+  // NOTE: the classNames are not abstracted in here
+  return <MTStep {...props}>{children}</MTStep>;
 };
