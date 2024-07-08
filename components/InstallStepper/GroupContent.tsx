@@ -1,8 +1,9 @@
 import { Accordion, AccordionHeader, AccordionBody } from "../Accordion";
+import { Markdown } from "@/components/Markdown";
 import { InputFields, Card } from "@/components";
 
 export const GroupContent = ({
-  group = { display_name: "" },
+  group = { display_name: "", description: "" },
   idx = 0,
   activeStep = 0,
   setActiveStep = (idx = 0) => {},
@@ -28,6 +29,9 @@ export const GroupContent = ({
     </AccordionHeader>
     <AccordionBody>
       <Card>
+        <div className="px-4">
+          <Markdown content={group.description}></Markdown>
+        </div>
         <InputFields
           group={group}
           install_input_values={install_input_values}
