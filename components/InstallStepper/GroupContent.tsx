@@ -10,8 +10,18 @@ export const GroupContent = ({
 }) => (
   <Accordion key={idx} open={activeStep === idx + 2}>
     <AccordionHeader
-      className="text-black dark:text-white hover:!text-gray-500"
       onClick={() => setActiveStep(idx + 2)}
+      className={
+        activeStep === idx + 2
+          ? `px-4
+              text-accordion-header-active-color
+              dark:text-accordion-header-active-color-dark
+              hover:!text-gray-500
+              bg-accordion-header-active-background
+              dark:bg-accordion-header-active-background-dark
+          `
+          : "px-4"
+      }
     >
       {group.display_name}
     </AccordionHeader>

@@ -1,4 +1,4 @@
-import { IconButton } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 
 export const NavArrows = ({
   handlePrev = () => {},
@@ -6,9 +6,9 @@ export const NavArrows = ({
   handleNext = () => {},
   isLastStep = false,
 }) => (
-  <div className="absolute -left-8 -right-8 top-1/2 flex justify-between">
-    <IconButton
-      className="rounded-full bg-black dark:bg-white text-white dark:text-black"
+  <div className="flex justify-between">
+    <Button
+      className="rounded-md flex items-center gap-4 pl-3 pr-7 bg-black dark:bg-white text-white dark:text-black"
       onClick={handlePrev}
       disabled={isFirstStep}
     >
@@ -26,12 +26,14 @@ export const NavArrows = ({
           d="M15.75 19.5 8.25 12l7.5-7.5"
         />
       </svg>
-    </IconButton>
-    <IconButton
-      className="rounded-full bg-black dark:bg-white text-white dark:text-black"
+      Previous
+    </Button>
+    <Button
+      className="rounded-md flex items-center gap-4 pl-7 pr-3 bg-black dark:bg-white text-white dark:text-black"
       onClick={handleNext}
       disabled={isLastStep}
     >
+      Next
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -46,6 +48,6 @@ export const NavArrows = ({
           d="m8.25 4.5 7.5 7.5-7.5 7.5"
         />
       </svg>
-    </IconButton>
+    </Button>
   </div>
 );

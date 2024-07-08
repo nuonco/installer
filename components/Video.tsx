@@ -7,7 +7,7 @@ interface IVideo {
 
 export const Video: FC<IVideo> = ({ className = "", src }) => {
   return (
-    <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full">
+    <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full rounded-video-container-radius">
       <iframe
         className={`absolute top-0 left-0 w-full h-full ${className}`}
         src={src}
