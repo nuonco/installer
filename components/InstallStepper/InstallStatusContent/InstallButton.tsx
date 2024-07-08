@@ -4,7 +4,8 @@ export const InstallButton = ({ install }) => {
   const loading = install.status === "provisioning";
 
   let label = "Create Install";
-  if (install.id.length > 0) label = "Reprovision Install";
+  if (install && install.id && install.id.length > 0)
+    label = "Reprovision Install";
   if (loading) label = "Provisioning";
 
   return (

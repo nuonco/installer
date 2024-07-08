@@ -10,9 +10,12 @@ import { getCloudPlatformRegions } from "@/common";
 
 export default async function Installer({ params, searchParams }) {
   const slug = params?.["installer-slug"];
-  const [app, installer] = await Promise.all([
+  const installId = params?.["install-id"];
+
+  const [app, installer, install] = await Promise.all([
     getAppBySlug(slug),
     getInstaller(),
+    getInstall(installId),
   ]);
   const regions = await getCloudPlatformRegions(app.cloud_platform);
 
@@ -41,8 +44,8 @@ export default async function Installer({ params, searchParams }) {
       <main className="flex-auto" id="steps">
         <InstallStepper
           app={app}
+          existingInstall={install}
           installer={installer}
-          existingInstall={null}
           searchParams={searchParams}
           createInstall={createInstall}
           getInstall={getInstall}

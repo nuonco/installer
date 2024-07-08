@@ -7,6 +7,7 @@ export const GroupContent = ({
   activeStep = 0,
   setActiveStep = (idx = 0) => {},
   searchParams = {},
+  install_input_values = {},
 }) => (
   <Accordion key={idx} open={activeStep === idx + 2}>
     <AccordionHeader
@@ -27,7 +28,11 @@ export const GroupContent = ({
     </AccordionHeader>
     <AccordionBody>
       <Card>
-        <InputFields group={group} searchParams={searchParams} />
+        <InputFields
+          group={group}
+          install_input_values={install_input_values}
+          searchParams={searchParams}
+        />
       </Card>
     </AccordionBody>
   </Accordion>
