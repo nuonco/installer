@@ -5,6 +5,7 @@ export const CompanyContent = ({
   open = false,
   onClick = () => {},
   searchParams = { name: "" },
+  name = null,
 }) => (
   <Accordion open={open}>
     <AccordionHeader
@@ -30,7 +31,11 @@ export const CompanyContent = ({
             <input
               className="border bg-inherit rounded px-4 py-1.5 shadow-inner"
               defaultValue={
-                Object.hasOwn(searchParams, "name") ? searchParams.name : ""
+                name
+                  ? name
+                  : Object.hasOwn(searchParams, "name")
+                    ? searchParams.name
+                    : ""
               }
               name="name"
               type="text"
