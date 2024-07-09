@@ -9,6 +9,8 @@ import {
 
 export const CloudAccountContent = ({
   app = { cloud_platform: "aws" },
+  aws_account = null,
+  azure_account = null,
   open = false,
   onClick = () => {},
   searchParams = {},
@@ -38,6 +40,7 @@ export const CloudAccountContent = ({
             <AWSInstallerFormFields
               searchParams={searchParams}
               regions={regions}
+              aws_account={aws_account}
             />
           </Card>
         </AccordionBody>
@@ -53,6 +56,7 @@ export const CloudAccountContent = ({
             <AzureInstallerFormFields
               searchParams={searchParams}
               regions={regions}
+              azure_account={azure_account}
             />
           </Card>
         </AccordionBody>
