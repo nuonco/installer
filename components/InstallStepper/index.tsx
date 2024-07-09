@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+
 import { Stepper, Step } from "../Stepper";
 import { Typography } from "@material-tailwind/react";
 
@@ -13,6 +15,7 @@ import { ErrorAlert } from "./ErrorAlert";
 
 const InstallStepper = ({
   app,
+  existingInstall,
   installer,
   searchParams,
   regions,
@@ -20,20 +23,28 @@ const InstallStepper = ({
   getInstall,
   redeployInstall,
 }) => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(
+    existingInstall ? app.input_config.input_groups.length + 2 : 0,
+  );
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
 
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
+  const router = useRouter();
 
   // track state of install
-  const [install, setInstall] = React.useState({
-    id: searchParams.install_id || "",
-    status: "not created",
-    status_description: "install has not been created yet",
-    install_components: [],
-  });
+  const [install, setInstall] = React.useState(
+    existingInstall
+      ? existingInstall
+      : {
+          id: searchParams.install_id || "",
+          status: "not created",
+          status_description: "install has not been created yet",
+          install_components: [],
+        },
+  );
+
   const [error, setError] = React.useState({
     description: "",
     error: "",
@@ -54,6 +65,8 @@ const InstallStepper = ({
         return;
       }
       installID = res.id;
+      // navigate to the sub-route
+      router.push(`/${app.name}/${res.id}`);
     } else {
       // if we've already created the install, redeploy it
       const reproRes = await redeployInstall(install.id, app, formData);
@@ -72,6 +85,7 @@ const InstallStepper = ({
     }
 
     setInstall(res);
+
     setError({
       description: "",
       error: "",
@@ -117,11 +131,15 @@ const InstallStepper = ({
     }
   }, 1000 * 10);
 
+  // TODO: break this out into a testable function
+  const _install_inputs = install.install_inputs || [{ values: {} }];
+  const install_input_values = _install_inputs[0].values;
   const input_groups = app.input_config.input_groups || [];
   const stepContent = input_groups.map((group, idx) => (
     <GroupContent
       key={idx}
       group={group}
+      install_input_values={install_input_values}
       idx={idx}
       setActiveStep={() => setActiveStep(idx + 2)}
       activeStep={activeStep}
@@ -159,7 +177,7 @@ const InstallStepper = ({
         isLastStep={(value) => setIsLastStep(value)}
         isFirstStep={(value) => setIsFirstStep(value)}
         lineClassName="bg-black dark:bg-white"
-        activeLineClassName="!bg-primary-500"
+        activeLineClassName="!bg-step-complete-border-color"
       >
         <Step
           className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
@@ -209,12 +227,15 @@ const InstallStepper = ({
 
       <form className="mt-10" onSubmit={formAction}>
         <CompanyContent
+          name={install.name}
           open={activeStep === 0}
           onClick={() => setActiveStep(0)}
         />
 
         <CloudAccountContent
           app={app}
+          aws_account={install.aws_account}
+          azure_account={install.aws_account}
           open={activeStep == 1}
           onClick={() => setActiveStep(1)}
           searchParams={searchParams}

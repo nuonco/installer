@@ -42,6 +42,7 @@ export default async function Installer({ params, searchParams }) {
         <InstallStepper
           app={app}
           installer={installer}
+          existingInstall={null}
           searchParams={searchParams}
           createInstall={createInstall}
           getInstall={getInstall}

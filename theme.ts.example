@@ -4,7 +4,8 @@ import { generateColorRange } from "./common/generateColors";
 const primary = generateColorRange("#4E17FF");
 
 export default {
-  darkMode: ["media", ["@media (prefers-color-scheme: dark)", "&:is(.dark *)"]],
+  darkMode: ["selector"],
+  // darkMode: [["media", ["@media (prefers-color-scheme: dark)", "&:is(.dark *)"],
   forceDarkMode: true,
   theme: {
     extend: {
