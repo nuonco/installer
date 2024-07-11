@@ -23,16 +23,6 @@ const InstallStepper = ({
   getInstall,
   redeployInstall,
 }) => {
-  const [activeStep, setActiveStep] = React.useState(
-    existingInstall ? app.input_config.input_groups.length + 2 : 0,
-  );
-  const [isLastStep, setIsLastStep] = React.useState(false);
-  const [isFirstStep, setIsFirstStep] = React.useState(false);
-
-  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-  const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
-  const router = useRouter();
-
   // track state of install
   const [install, setInstall] = React.useState(
     existingInstall
@@ -42,8 +32,24 @@ const InstallStepper = ({
           status: "not created",
           status_description: "install has not been created yet",
           install_components: [],
+          install_inputs: [],
         },
   );
+
+  // TODO: break this out into a testable function
+  const _install_inputs = install.install_inputs[0] || [{ values: {} }];
+  const install_input_values = _install_inputs.values;
+  const input_groups = app.input_config.input_groups || [];
+
+  const [activeStep, setActiveStep] = React.useState(
+    existingInstall ? input_groups.length + 2 : 0,
+  );
+  const [isLastStep, setIsLastStep] = React.useState(false);
+  const [isFirstStep, setIsFirstStep] = React.useState(false);
+
+  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
+  const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
+  const router = useRouter();
 
   const [error, setError] = React.useState({
     description: "",
@@ -136,10 +142,6 @@ const InstallStepper = ({
     }
   }, 1000 * 10);
 
-  // TODO: break this out into a testable function
-  const _install_inputs = install.install_inputs || [{ values: {} }];
-  const install_input_values = _install_inputs[0].values;
-  const input_groups = app.input_config.input_groups || [];
   const stepContent = input_groups.map((group, idx) => (
     <GroupContent
       key={idx}
