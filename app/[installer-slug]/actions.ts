@@ -125,7 +125,7 @@ export async function redeployInstall(
     return updateRes;
   }
 
-  if (reqBody.inputs.length > 0) {
+  if (Object.keys(reqBody.inputs).length > 0) {
     const inputsRes = await updateInputs(id, app, formData);
     if (inputsRes.error) {
       return inputsRes;
