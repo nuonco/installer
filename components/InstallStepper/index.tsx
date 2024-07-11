@@ -55,6 +55,11 @@ const InstallStepper = ({
   const formAction = async (event) => {
     event.preventDefault();
 
+    if (event.key == "Enter") {
+      // this should have been caught by onKeyUp but we include it here also
+      handleNext();
+    }
+
     const formData = new FormData(event.target);
     let installID = "";
     if (install.id === "") {
@@ -225,7 +230,16 @@ const InstallStepper = ({
         </Step>
       </Stepper>
 
-      <form className="mt-10" onSubmit={formAction}>
+      <form
+        className="mt-10"
+        onSubmit={formAction}
+        onKeyUp={(e) => {
+          e.preventDefault();
+          if (e.key == "Enter") {
+            handleNext();
+          }
+        }}
+      >
         <CompanyContent
           name={install.name}
           open={activeStep === 0}
