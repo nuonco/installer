@@ -5,6 +5,7 @@ const primary = generateColorRange("#ef6a3f");
 
 export default {
   darkMode: "selector",
+  forceDarkMode: true,
   theme: {
     extend: {
       colors: {
