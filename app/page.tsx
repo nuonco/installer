@@ -34,7 +34,9 @@ export default async function Home({ searchParams }) {
             apps.map((app) => (
               <Card className="p-6" key={app.id}>
                 <span>
-                  <h2 className="text-lg font-semibold mb-2">{app.name}</h2>
+                  <h2 className="text-lg font-semibold mb-2">
+                    {app.display_name ? app.display_name : app.name}
+                  </h2>
                   <p className="text-xs leading-relaxed">{app.description}</p>
                 </span>
 
