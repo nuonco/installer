@@ -49,7 +49,21 @@ export const CloudAccountContent = ({
 
     {app?.cloud_platform === "azure" && (
       <>
-        <AccordionHeader onClick={onClick}>Azure Account</AccordionHeader>
+        <AccordionHeader
+          className={
+            open
+              ? `px-4
+                  text-accordion-header-active-color
+                  dark:text-accordion-header-active-color-dark
+                  hover:!text-gray-500
+                  bg-accordion-header-active-background
+                  dark:bg-accordion-header-active-background-dark`
+              : "px-4"
+          }
+          onClick={onClick}
+        >
+          Azure Account
+        </AccordionHeader>
         <AccordionBody className="grid grid-cols-2 gap-4">
           <StepOneAzure />
           <Card>
