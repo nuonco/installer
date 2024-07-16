@@ -36,7 +36,9 @@ export default async function Installer({ params, searchParams }) {
         </div>
 
         <div className="text-center">
-          <h1 className="text-2xl font-semibold mb-2">{app.name}</h1>
+          <h1 className="text-2xl font-semibold mb-2">
+            {app.display_name || app.name}
+          </h1>
           <p>{app?.description}</p>
         </div>
       </header>
