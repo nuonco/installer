@@ -10,11 +10,11 @@ export const GroupContent = ({
   searchParams = {},
   install_input_values = {},
 }) => (
-  <Accordion key={idx} open={activeStep === idx + 2}>
+  <Accordion key={idx} open={activeStep === idx + 1}>
     <AccordionHeader
-      onClick={() => setActiveStep(idx + 2)}
+      onClick={() => setActiveStep(idx + 1)}
       className={
-        activeStep === idx + 2
+        activeStep === idx + 1
           ? `px-4
               text-accordion-header-active-color
               dark:text-accordion-header-active-color-dark
