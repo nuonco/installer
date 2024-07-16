@@ -148,7 +148,7 @@ const InstallStepper = ({
       group={group}
       install_input_values={install_input_values}
       idx={idx}
-      setActiveStep={() => setActiveStep(idx + 2)}
+      setActiveStep={() => setActiveStep(idx + 1)}
       activeStep={activeStep}
     />
   ));
@@ -159,9 +159,9 @@ const InstallStepper = ({
       activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
       completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
       key={idx}
-      onClick={() => setActiveStep(idx + 2)}
+      onClick={() => setActiveStep(idx + 1)}
     >
-      {idx + 3}
+      {idx + 2}
       <div className="absolute -bottom-[2rem] w-max text-center">
         <Typography variant="h6" className="text-black dark:text-gray-100">
           {group.display_name}
@@ -200,21 +200,21 @@ const InstallStepper = ({
           </div>
         </Step>
 
+        {...steps}
+
         <Step
           className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
           activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
           completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
-          onClick={() => setActiveStep(1)}
+          onClick={() => setActiveStep(steps.length + 1)}
         >
-          2
+          {steps.length + 2}
           <div className="absolute -bottom-[2rem] w-max text-center">
             <Typography variant="h6" className="text-black dark:text-gray-100">
               AWS IAM Role
             </Typography>
           </div>
         </Step>
-
-        {...steps}
 
         <Step
           className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
@@ -223,7 +223,6 @@ const InstallStepper = ({
           onClick={() => setActiveStep(steps.length + 2)}
         >
           {steps.length + 3}
-
           <div className="absolute -bottom-[2rem] w-max text-center">
             <Typography variant="h6" className="text-black dark:text-gray-100">
               Install Status
@@ -248,17 +247,17 @@ const InstallStepper = ({
           onClick={() => setActiveStep(0)}
         />
 
+        {...stepContent}
+
         <CloudAccountContent
           app={app}
           aws_account={install.aws_account}
           azure_account={install.aws_account}
-          open={activeStep == 1}
-          onClick={() => setActiveStep(1)}
+          open={activeStep == steps.length + 1}
+          onClick={() => setActiveStep(steps.length + 1)}
           searchParams={searchParams}
           regions={regions}
         />
-
-        {...stepContent}
 
         <InstallStatusContent
           open={activeStep === steps.length + 2}
