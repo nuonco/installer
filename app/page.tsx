@@ -32,7 +32,10 @@ export default async function Home({ searchParams }) {
         <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6">
           {apps.length &&
             apps.map((app) => (
-              <Card className="p-6" key={app.id}>
+              <Card
+                className="p-6 shadow-card-shadow dark:shadow-card-shadow-dark"
+                key={app.id}
+              >
                 <span>
                   <h2 className="text-lg font-semibold mb-2">
                     {app.display_name ? app.display_name : app.name}
