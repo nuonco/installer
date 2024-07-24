@@ -1,7 +1,47 @@
 import React, { type FC } from "react";
 import { Link, Card } from "@/components";
 
+/*
+ * Compose the Cloud Formation QuickCreate URL
+ *
+ * The templateUrl changes based on wether or not delegation is enabled.
+ *
+ */
+const composeCloudformationQuickCreateUrl = (app, aws_delegation_config) => {
+  const base_url =
+    "https://us-west-2.console.aws.amazon.com/cloudformation/home#/stacks/quickcreate";
+
+  let delegationEnabled =
+    aws_delegation_config && aws_delegation_config.iam_role_arn;
+  let params = {};
+
+  if (delegationEnabled) {
+    params = {
+      templateUrl:
+        "https://nuon-artifacts.s3.us-west-2.amazonaws.com/sandbox/aws-ecs/cloudformation-template.yaml",
+      stackName: `nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`,
+      param_DelegationRoleARN: `${aws_delegation_config?.iam_role_arn}`,
+    };
+  } else {
+    params = {
+      templateUrl:
+        app?.sandbox_config?.artifacts?.cloudformation_stack_template,
+      stackName: `nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`,
+      param_DelegationRoleARN: `${aws_delegation_config?.iam_role_arn}`,
+    };
+  }
+
+  let searchParams = new URLSearchParams(params);
+  let url = new URL(base_url);
+  return url + "?" + searchParams.toString();
+};
+
 export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
+  let aws_delegation_config = app?.sandbox_config?.aws_delegation_config;
+  let quickCreateUrl = composeCloudformationQuickCreateUrl(
+    app,
+    aws_delegation_config,
+  );
   return (
     <div className="flex flex-col gap-4">
       <p>
@@ -40,7 +80,7 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
 
         <Link
           className="text-sm mt-4"
-          href={`https://us-west-2.console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?templateUrl=${app?.sandbox_config?.artifacts?.cloudformation_stack_template}&stackName=nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`}
+          href={quickCreateUrl}
           target="_blank"
           rel="noreferrer"
         >

@@ -7,8 +7,18 @@ import {
   Card,
 } from "@/components";
 
+interface AWSDelegationConfig {
+  iam_role_arn: string | null;
+}
+interface SandboxConfig {
+  aws_delegation_config: AWSDelegationConfig;
+}
+
 export const CloudAccountContent = ({
-  app = { cloud_platform: "aws" },
+  app = {
+    cloud_platform: "aws",
+    sandbox_config: { aws_delegation_config: { iam_role_arn: null } },
+  },
   aws_account = null,
   azure_account = null,
   open = false,
@@ -38,6 +48,7 @@ export const CloudAccountContent = ({
           <StepOneAWS app={app} />
           <Card>
             <AWSInstallerFormFields
+              aws_delegation_config={app?.sandbox_config?.aws_delegation_config}
               searchParams={searchParams}
               regions={regions}
               aws_account={aws_account}
