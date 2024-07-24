@@ -25,6 +25,7 @@ export const AWSInstallerFormFields: FC<{
   searchParams?: Record<string, string>;
   regions: Array<Object>;
   aws_account: any | null;
+  aws_delegation_config: { iam_role_arn: "" } | null;
 }> = ({ searchParams = {}, regions, aws_account }) => {
   return (
     <fieldset className="p-4 w-full">
