@@ -18,7 +18,7 @@ const composeCloudformationQuickCreateUrl = (app, aws_delegation_config) => {
   if (delegationEnabled) {
     params = {
       templateUrl:
-        "https://nuon-artifacts.s3.us-west-2.amazonaws.com/sandbox/aws-ecs/cloudformation-template.yaml",
+        "https://nuon-artifacts.s3.us-west-2.amazonaws.com/sandbox/aws-ecs/cloudformation-template-delegation.yaml",
       stackName: `nuon-${app?.sandbox_config?.public_git_vcs_config?.directory}-permissions`,
       param_DelegationRoleARN: `${aws_delegation_config?.iam_role_arn}`,
     };
