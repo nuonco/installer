@@ -13,6 +13,26 @@ import { GroupContent } from "./GroupContent";
 import { InstallStatusContent } from "./InstallStatusContent";
 import { ErrorAlert } from "./ErrorAlert";
 
+const getFinalStepActiveClassName = (status: string | null) => {
+  // default is the "orange"/in-progress colors
+  const defaultClassName =
+    "border-4 border-step-active-border-color dark:border-step-active-border-color";
+  // success is the "green"/complete colors
+  let successClassName =
+    "border-4 border-step-complete-border-color dark:border-step-complete-border-color";
+  // error is the "red" color. there is no themeable color for this state.
+  let errorClassName = "border-4 border-red-800 dark:border-red-800";
+
+  if (status === "active") {
+    return successClassName;
+  } else if (status === "error") {
+    return errorClassName;
+  } else if (status === "") {
+    return defaultClassName;
+  }
+  return defaultClassName;
+};
+
 const InstallStepper = ({
   app,
   existingInstall,
@@ -177,6 +197,7 @@ const InstallStepper = ({
     );
   }
 
+  let finalStepActiveClassName = getFinalStepActiveClassName(install?.status);
   return (
     <div className="relative w-full p-4">
       <Stepper
@@ -216,9 +237,11 @@ const InstallStepper = ({
           </div>
         </Step>
 
+        {/* this step needs to be in the complete state if the installation is complete. as a result, the activeClassName
+            is determined dynamically. */}
         <Step
           className="border-4 border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
-          activeClassName="border-4 border-step-active-border-color dark:border-step-active-border-color"
+          activeClassName={finalStepActiveClassName}
           completedClassName="border-4 border-step-complete-border-color dark:border-step-complete-border-color"
           onClick={() => setActiveStep(steps.length + 2)}
         >
