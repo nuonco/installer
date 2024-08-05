@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       images: [
         {
-          url: metadata.logo_url,
+          url: metadata.og_image_url,
         },
       ],
     },
