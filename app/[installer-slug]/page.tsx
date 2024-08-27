@@ -5,6 +5,7 @@ import {
 } from "@/app/[installer-slug]/actions";
 import { getAppBySlug, getInstaller } from "@/common";
 import { Link } from "@/components";
+import { Footer } from "@/components/Footer";
 import InstallStepper from "@/components/InstallStepper";
 import { getCloudPlatformRegions } from "@/common";
 
@@ -12,7 +13,7 @@ export default async function Installer({ params, searchParams }) {
   const slug = params?.["installer-slug"];
   const [app, installer] = await Promise.all([
     getAppBySlug(slug),
-    getInstaller(),
+    getInstaller(searchParams ? searchParams.installerId : null),
   ]);
   const regions = await getCloudPlatformRegions(app.cloud_platform);
 
@@ -39,7 +40,6 @@ export default async function Installer({ params, searchParams }) {
           <p>{app?.description}</p>
         </div>
       </header>
-
       <main className="flex-auto" id="steps">
         <InstallStepper
           app={app}
@@ -52,6 +52,7 @@ export default async function Installer({ params, searchParams }) {
           regions={regions}
         />
       </main>
+      <Footer {...installer.metadata} />
     </>
   );
 }
