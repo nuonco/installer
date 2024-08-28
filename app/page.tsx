@@ -14,9 +14,11 @@ export async function generateMetadata({
   const { metadata } = await getInstaller(
     searchParams ? searchParams.installerId : null,
   );
+  console.debug("[index] Generating Metdata");
 
   // TODO(fd): we need to address this.
   if (!!!metadata) {
+    console.debug("[index] No Metdata Found");
     return {};
   }
 
