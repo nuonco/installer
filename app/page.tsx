@@ -1,8 +1,58 @@
 import { getInstaller } from "@/common";
 import { Link, Video, Card } from "@/components";
+import { Footer } from "@/components/Footer";
+
+import type { Metadata } from "next";
+
+type Props = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({
+  searchParams,
+}: Props): Promise<Metadata> {
+  const { metadata } = await getInstaller(
+    searchParams ? searchParams.installerId : null,
+  );
+  console.debug("[index] Generating Metdata");
+
+  // TODO(fd): we need to address this.
+  if (!!!metadata) {
+    console.debug("[index] No Metdata Found");
+    return {};
+  }
+
+  return {
+    title: metadata.name,
+    description: metadata.description,
+    icons: {
+      icon: metadata.favicon_url,
+      shortcut: metadata.favicon_url,
+    },
+    openGraph: {
+      title: metadata.name,
+      description: metadata.description,
+      type: "website",
+      images: [
+        {
+          url: metadata.og_image_url,
+        },
+      ],
+    },
+    twitter: {
+      title: metadata.name,
+      description: metadata.description,
+      images: [
+        {
+          url: metadata.logo_url,
+        },
+      ],
+    },
+  };
+}
 
 export default async function Home({ searchParams }) {
-  const { metadata, apps } = await getInstaller();
+  const { metadata, apps } = await getInstaller(searchParams.installerId);
   const queryString = new URLSearchParams(searchParams).toString();
   const demoUrl = metadata.formatted_demo_url || metadata.demo_url;
   const isDemoUrlValid = /^((http|https):\/\/)/.test(demoUrl);
@@ -50,6 +100,7 @@ export default async function Home({ searchParams }) {
             ))}
         </div>
       </main>
+      <Footer {...metadata} />
     </>
   );
 }
