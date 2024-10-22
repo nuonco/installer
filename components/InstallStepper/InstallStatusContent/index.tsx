@@ -63,12 +63,7 @@ export const InstallStatusContent = ({
         }
         onClick={onClick}
       >
-        <span>
-          Install Status <StatusIcon status={install.status} />{" "}
-          <span className="text-sm font-medium">
-            {install.status_description}
-          </span>
-        </span>
+        <span>Install Status</span>
       </AccordionHeader>
       <AccordionBody>
         <div className="grid grid-cols-1 gap-4 lg:gap-8 lg:grid-cols-2">
