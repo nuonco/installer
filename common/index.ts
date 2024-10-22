@@ -1,5 +1,4 @@
-export const NUON_API_URL =
-  process?.env?.NUON_API_URL || "https://ctl.prod.nuon.co";
+export const NUON_API_URL = process?.env?.NUON_API_URL || "https://api.nuon.co";
 
 export async function getInstaller(): Promise<Record<string, any>> {
   const res = await fetch(
