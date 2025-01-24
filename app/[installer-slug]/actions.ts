@@ -106,7 +106,7 @@ export async function updateInputs(
       Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
       "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
     },
-    method: "POST",
+    method: "PATCH",
     body: JSON.stringify({ inputs: input.inputs }),
   });
 
