@@ -6,8 +6,7 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
     <div className="flex flex-col gap-4">
       <p>
         In order to connect your AWS account, please create an IAM role with
-        permissions to provision your install. You can create your IAM role
-        however works for your team, using one of the following mechanisms.
+        permissions to provision your install.
       </p>
 
       <p>
@@ -46,63 +45,6 @@ export const StepOneAWS: FC<{ app: Record<string, any> }> = ({ app }) => {
         >
           Create IAM Role
         </Link>
-      </Card>
-
-      <Card className="p-4">
-        <h3 className="text-md font-semibold">
-          Create IAM policies with Terraform
-        </h3>
-        <p className="text-sm">
-          You can use our sandbox IAM role Terraform module to automatically
-          create an IAM for a sandbox type using Terraform. Please set the IAM
-          role ARN as an output, and use it for step 2.
-        </p>
-
-        <Link
-          className="text-sm mt-4"
-          href="https://github.com/nuonco/sandboxes/tree/main/iam-role"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Terraform Module
-        </Link>
-      </Card>
-
-      <Card className="p-4">
-        <h3 className="text-md font-semibold">Create IAM policies manually</h3>
-        <p className="text-sm">
-          You can use the following policies to manually create an IAM role
-          using the permissions noted below. Please note, the `deprovision`
-          permissions are only needed if you would like to deprovision the
-          install, and can be added later if desired.
-        </p>
-
-        <div className="flex gap-2 mt-4 items-center">
-          <Link
-            className="text-sm"
-            href={app?.sandbox_config?.artifacts?.trust_policy}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Trust policy
-          </Link>
-          <Link
-            className="text-sm"
-            href={app?.sandbox_config?.artifacts?.provision_policy}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Provision policy
-          </Link>
-          <Link
-            className="text-sm"
-            href={app?.sandbox_config?.artifacts?.deprovision_policy}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Deprovision policy
-          </Link>
-        </div>
       </Card>
     </div>
   );
