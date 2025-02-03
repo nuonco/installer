@@ -57,6 +57,22 @@ const InstallStepper = ({
     user_error: false,
   });
 
+  const loadInstall = async (installID: string) => {
+    const res = await getInstall(installID);
+    if (res.error) {
+      setError(res);
+      return;
+    }
+
+    setInstall(res);
+
+    setError({
+      description: "",
+      error: "",
+      user_error: false,
+    });
+  };
+
   // create or update install when form is submitted
   const formAction = async (event) => {
     event.preventDefault();
@@ -78,6 +94,7 @@ const InstallStepper = ({
       installID = res.id;
       // navigate to the sub-route
       router.push(`/${app.name}/${res.id}`);
+      return;
     } else {
       // if we've already created the install, redeploy it
       const reproRes = await redeployInstall(install.id, app, formData);
@@ -85,23 +102,10 @@ const InstallStepper = ({
         setError(reproRes);
         return;
       }
+      setTimeout(() => {
+        loadInstall(install.id);
+      }, 150);
     }
-
-    // by this point we should have an install ID
-    // fetch the install so we can render the status
-    const res = await getInstall(installID);
-    if (res.error) {
-      setError(res);
-      return;
-    }
-
-    setInstall(res);
-
-    setError({
-      description: "",
-      error: "",
-      user_error: false,
-    });
   };
 
   // poll for install status once we have an ID
