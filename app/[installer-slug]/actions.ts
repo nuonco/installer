@@ -22,6 +22,28 @@ export async function createInstall(
   return await res.json();
 }
 
+async function getLatestInstallSandboxRunOutputs(
+  id: string,
+): Promise<Record<string, any>> {
+  const res = await fetch(`${NUON_API_URL}/v1/installs/${id}/sandbox-runs`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${process?.env?.NUON_API_TOKEN}`,
+      "X-Nuon-Org-ID": process.env?.NUON_ORG_ID || "",
+    },
+  });
+
+  // work-around for API bug
+  let json = await res.json();
+  if (Array.isArray(json) && json.length > 0) {
+    json = json[0]; // TODO(fd): find out if this needs to be first or last
+  }
+  if (json.runner_job && json.runner_job.outputs) {
+    return json.runner_job.outputs;
+  }
+  return {};
+}
+
 export async function getInstall(id: string): Promise<Record<string, any>> {
   const res = await fetch(`${NUON_API_URL}/v1/installs/${id}`, {
     cache: "no-store",
@@ -36,6 +58,12 @@ export async function getInstall(id: string): Promise<Record<string, any>> {
   if (Array.isArray(json)) {
     json = json[0];
   }
+
+  // get sandbox outputs
+  // NOTE(fd): this is hacky - consider not doing this
+  let sandbox_outputs = await getLatestInstallSandboxRunOutputs(id);
+  json["sandbox"] = {};
+  json["sandbox"]["outputs"] = sandbox_outputs;
 
   return json;
 }
