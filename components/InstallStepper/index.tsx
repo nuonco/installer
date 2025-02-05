@@ -51,6 +51,7 @@ const InstallStepper = ({
           id: searchParams.install_id || "",
           status: "not created",
           status_description: "install has not been created yet",
+          sandbox: { outputs: {} },
           install_components: [],
           install_inputs: [],
         },
