@@ -19,7 +19,8 @@ export const InstallStatus: FC<{ install: Record<string, any> }> = ({
   const components = install_components.map((component, idx) => {
     let status = "pending";
     let status_description = "waiting to deploy";
-    if (component.install_deploys.length > 0) {
+    console.log(component);
+    if (component.install_deploys && component.install_deploys.length > 0) {
       const lastDeploy = component.install_deploys[0];
       status = lastDeploy.status;
       status_description = lastDeploy.status_description;
